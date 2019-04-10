@@ -30,6 +30,7 @@
             - python
             - node
             - psql
+            - bc
             - other scripting/interpreted languages
     - Examples
         - sh (Bourne shell)
@@ -70,9 +71,10 @@
             - Heap (explicitly allocated)
             - Stack (function calls)
         - Open file descriptors (input/output)
-            - stdin (0)
-            - stdout (1)
-            - stderr (2)
+            - standard:
+                - stdin (0)
+                - stdout (1)
+                - stderr (2)
             - files
             - sockets
             - pipes
@@ -89,6 +91,54 @@
             - `man which`
             - `man man` :mindblown:
             - `man cd` :thinking:
+    - Stdin, Stdout, Stderr
 - Composing commands
+    - `;`
+    - `&&`
+    - `||`
+    - `$()` (or backticks)
     - Redirection
+        - `<` - redirect file to stdin
+        - `>` - redirect stdout to file (truncate it first)
+        - `>>` - redirect stdout to file (append to it)
+        - `2>&1` - redirect stderr to stdin
+        - `&>` - redirect both stdout and stderr to a file
+        - `<<< ''` - "Herestring" - redirect string literal to stdin
+        - `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
+        - /dev/null - a useful black hole
     - Pipes and pipelines
+        - `|` - use one process's stdout as the next process's stdin
+- Navigation
+    - `pwd`
+    - `ls`
+        - `ls -a`
+        - `ls -l`
+        - `ls -lh`
+        - `ls -R`
+    - `tree`
+    - `cd`
+        - `cd`
+        - `cd ..`
+        - `cd -`
+        - `cd ~`
+        - `cd /`
+    - symlinks
+        - `ln -s`
+    - `alias`
+    - `grep`
+- Job control
+    - `&` - run in background
+    - ctrl-c - SIGINT
+    - ctrl-z - SIGTSTP
+        - `bg`
+        - `fg`
+    - `jobs`
+    - `kill`
+    - `kill $(jobs -p)`
+    - `pkill`
+    - `killall`
+- Environment variables
+    - Inline
+    - `export`
+    - in .bashrc
+- `.bashrc`
