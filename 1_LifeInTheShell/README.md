@@ -9,14 +9,21 @@
    ""     ""    ""
 ```
 
+The goal of this lesson is to cover the basics of interacting with a shell,
+and to take the opportunity to learn some operating system concepts along the
+way.
+
 ## What is a shell?
 
 "In computing, a shell is a user interface for access to an operating system's
 services." - [Wikipedia](https://en.wikipedia.org/wiki/Shell_(computing))
 
-Operating system services include:
+"Shell" because it's the outermost layer around the operating system kernel.
+
+Operating system services:
     - Users And Groups (i.e. permissions)
     - File Management and I/O
+    - Device Management
     - Memory Management
     - Process Management
     - Scheduling
@@ -47,28 +54,107 @@ Examples of shells:
     - ash (Almquist Shell)
     - dash (Debian Almquist Shell)
 
-## Navigation
+### Navigation
 
-    - `pwd`
-    - `ls`
-        - `ls -a`
-        - `ls -l`
-        - `ls -lh`
-        - `ls -R`
-    - `tree`
+In a shell, you are always located within a particular directory in the
+filesystem (the "current working directory"). You start within your user's
+`$HOME` directory (`~`).
+
+- `pwd` - print working directory
+- `ls` - list files in directory
+    - `ls -a`
+    - `ls -lh`
+    - `ls -R`
+- `tree` - display directory tree
+- `cd` - change directory
     - `cd`
-        - `cd`
-        - `cd ~`
-        - `cd ~user`
-        - `cd ..`
-        - `cd -`
-        - `cd /`
-        - `$CDPATH`
-    - `dirs`
-        - `pushd`
-        - `pop`
-    - symlinks
-        - `ln -s`
+    - `cd /`
+    - `cd ~`
+    - `cd ..`
+    - `cd -`
+    - `cd ~user`
+    - `$CDPATH` - like `$PATH`, but for `cd`
+- `dirs` - alternative to `cd` that retains history of directories visited
+    - `dirs` - list directory history
+    - `pushd` - change directories and add it to the history
+    - `popd` - go back in the directory history
+- links - references to other files elsewhere on the system
+    - `ln` - hard link
+    - `ln -s` - soft link/symbolic link/symlink
+
+### Users/Groups/Permissions
+
+In a shell, you are always logged in as a particular user.
+    - `$USER`
+    - `whoami`
+
+The `/etc/passwd` file contains a list of all of the users on the system,
+along with their home directories and startup commands.
+
+The `/etc/group` file contains a list of all of the groups on the system, and
+who belongs to each.
+
+Users/groups are the fundamental units of the operating system's permission
+system. All files have a user/group, as well as a set of permissions that
+explain which users/groups can access the file in which ways. All processes
+also have a set of user/group ids, which represent the permissions of the
+process.
+
+File permissions can be viewed with `stat` or `ls -l`.
+
+Process user/groups can be viewed with `ps`.
+
+File ownership can be changed with `chown`
+    - `chown postgres`
+
+File permissions can be changed with `chmod`
+    - `chmod 644`
+    - `chmod u+rw`
+    - `chmod go-wx`
+    - `chmod u+rw-x`
+
+Your current active user can be changed with `sudo`
+    - `sudo -s`.
+    - `sudo -su postgres`.
+
+### Commands
+
+A shell command can include the following
+    - Program name
+        - Searches for it in the `$PATH`
+        - Use `which` to see which program will be called
+    - Arguments - everything that comes after the command name
+        - Options - e.g. `docker-compose -f docker-compose.backend.yml`
+        - Flags - e.g. `ls -R`
+    - Environment variables
+        - `VAR=whatever bash -c 'echo $VAR'`
+    - Stdin, Stdout, Stderr
+
+Almost all good commands have a [usage message](https://en.wikipedia.org/wiki/Usage_message)
+that explains the available arguments/options/flags. These messages follow a
+conventional syntax:
+
+    - Square brackets indicate optional arguments `[-b]`
+    - Angled brackets indicate required arguments `<pid>`
+    - Exclusive parameters are separated by vertical bars/pipes `[-f | -g]`
+
+```
+Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]
+```
+
+### Help
+
+You can get help for almost any command right in your terminal
+
+    - `--help`
+        - `man --help`
+        - `cd --help`
+    - `man` (i.e. "manual")
+        - `man which`
+        - `man man` :mindblown:
+        - `man cd` :thinking:
+    - https://www.google.com
+
 
 ## What is a program?
 
@@ -105,10 +191,11 @@ In any case, a program is **data**
         - `which bash`
         - `which which` :mindblown:
         - `which cd` :thinking:
+        - `type cd`
 
-## What is a process?
+## Process Management
 
-An instance of an executing program.
+A process is an instance of an executing program.
 
 Processes have:
     - Process ID (PID)
@@ -148,8 +235,7 @@ There are many ways to view information about running processes on your system
     - `stat /prod/PID`
     - `cat /proc/PID/cmdline`
     - `ll /proc/PID/cwd`
-    - `echo "yo" > /proc/PID/fd/1`
-    - :mindblown:
+    - `echo "yo" > /proc/PID/fd/1` :mindblown:
 
 ### Running processes in the background
 
@@ -189,46 +275,6 @@ Commands for background processes
 Signals
     - `kill -l` - list all signals
     - `man 7 signal` - manual page for signals
-
-## Anatomy of a shell command
-
-A shell command to start a process includes
-    - Program name
-        - Searches for it in the `$PATH`
-        - Use `which` to see which program will be called
-    - Arguments - everything that comes after the command name
-        - Options - e.g. `docker-compose -f docker-compose.backend.yml`
-        - Flags - e.g. `ls -R`
-    - Environment variables
-        - `VAR=whatever bash -c 'echo $VAR'`
-    - Stdin, Stdout, Stderr
-
-### Usage
-
-Almost all good commands have a [usage message](https://en.wikipedia.org/wiki/Usage_message)
-that explains the available arguments/options/flags. These messages follow a
-conventional syntax:
-
-    - Square brackets indicate optional arguments `[-b]`
-    - Angled brackets indicate required arguments `<pid>`
-    - Exclusive parameters are separated by vertical bars/pipes `[-f | -g]`
-
-```
-Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]
-```
-
-### Help
-
-You can get help for almost any command right in your terminal
-
-    - `--help`
-        - `man --help`
-        - `cd --help`
-    - `man` (i.e. "manual")
-        - `man which`
-        - `man man` :mindblown:
-        - `man cd` :thinking:
-    - https://www.google.com
 
 ### Composing commands
 
@@ -289,17 +335,18 @@ Pipes and pipelines
 
 ## Environment variables
 
-    - Built-in:
-        - `$USER`
-        - `$PATH`
-        - `$CDPATH`
-        - `$TERM`
-        - `$RANDOM`
-        - `$SECONDS`
-        - `$LINENO`
-    - Inline (e.g. `VAR=whatever bash -c 'echo "$VAR"'`)
-    - `export`
-    - in .bashrc
+- Built-in:
+    - `$PWD`
+    - `$USER`
+    - `$PATH`
+    - `$CDPATH`
+    - `$TERM`
+    - `$RANDOM`
+    - `$SECONDS`
+    - `$LINENO`
+- Inline (e.g. `VAR=whatever bash -c 'echo "$VAR"'`)
+- `export`
+- `export` in .bashrc or other sourced file
 
 ### Quoting and string interpolation
 
