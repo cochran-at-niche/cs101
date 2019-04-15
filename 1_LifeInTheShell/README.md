@@ -9,9 +9,12 @@
    ""     ""    ""
 ```
 
-The goal of this lesson is to cover the basics of interacting with a shell,
-and to take the opportunity to learn some operating system concepts along the
-way.
+The goals of this lesson are:
+    - Understand what a shell is
+    - Cover the basics of interacting with a shell
+    - Learn some tips and tricks for making the most of your shell 
+    - Touch on some operating systems concepts
+    - Whet your curiosity to learn more
 
 ## What is a shell?
 
@@ -34,6 +37,29 @@ Operating system services:
 
 See [The Linux Programming Interface](https://github.com/shihyu/Linux_Programming/blob/master/books/The%20Linux%20Programming%20Interface%20-%20A%20Linux%20and%20UNIX%20System%20Programming%20Handbook.pdf)
 
+### Not a Terminal
+
+A shell is **not** a terminal! These are different concepts (even if we often
+use the words interchangeably in normal conversation).
+
+A terminal emulator is a software program that emulates an old hardware
+terminal, much like a gameboy emulator emulates a physical gameboy.
+
+A shell is an interactive program whose input/output is typically
+provided/displayed via a terminal.
+
+Examples of terminals include:
+    - xterm
+    - gnome-terminal
+    - Terminal (macOS)
+    - ITerm2 (macOS)
+    - MinTTY (Windows)
+    - PuTTY (Windows)
+    - ConEmu (Windows)
+    - [Cool Retro Term](https://github.com/Swordfish90/cool-retro-term#screenshots)
+
+`ps aux | grep "bash\|term"`
+
 ### REPL (Read Evaluate Print Loop)
 
 A shell is a special kind of program called a "Read Evaluate Print Loop".
@@ -54,33 +80,72 @@ Examples of shells:
     - ash (Almquist Shell)
     - dash (Debian Almquist Shell)
 
+### What is a Program?
+
+A shell is special kind of program. But what is a program?
+
+The word "program" is vague
+    - Source vs compiled 
+    - Compiled vs interpreted
+
+Fundamentally, a program is set of instructions
+    - Compiled
+        - Human readable source code
+        - Compiled to binary
+        - Run directly as machine code
+            - `fact`
+    - Interpreted
+        - Human readable scripts
+        - Input to other programs
+            - `bash -c "echo yo"`
+            - `python my_script.py`
+            - `node index.js`
+        - Shebang (`#!/bin/bash`)
+
+In any case, a program is **data**
+    - Von Neumann architecture
+        - Code/instructions are data
+        - "Von Neumann architecture is based on the stored-program computer
+          concept, where instruction data and program data are stored in the
+          same memory.  This design is still used in most computers produced
+          today."
+        - Revolutionary, at the time (1945)
+    - `which` - searches `$PATH` for the program with that name
+        - `which fact`
+        - `which bash`
+        - `which which` :mindblown:
+        - `which cd` :thinking:
+        - `type cd`
+
+## Basic Usage
+
 ### Navigation
 
 In a shell, you are always located within a particular directory in the
 filesystem (the "current working directory"). You start within your user's
 `$HOME` directory (`~`).
 
-- `pwd` - print working directory
-- `ls` - list files in directory
-    - `ls -a`
-    - `ls -lh`
-    - `ls -R`
-- `tree` - display directory tree
-- `cd` - change directory
-    - `cd`
-    - `cd /`
-    - `cd ~`
-    - `cd ..`
-    - `cd -`
-    - `cd ~user`
-    - `$CDPATH` - like `$PATH`, but for `cd`
-- `dirs` - alternative to `cd` that retains history of directories visited
-    - `dirs` - list directory history
-    - `pushd` - change directories and add it to the history
-    - `popd` - go back in the directory history
-- links - references to other files elsewhere on the system
-    - `ln` - hard link
-    - `ln -s` - soft link/symbolic link/symlink
+    - `pwd` - print working directory
+    - `ls` - list files in directory
+        - `ls -a`
+        - `ls -lh`
+        - `ls -R`
+    - `tree` - display directory tree
+    - `cd` - change directory
+        - `cd`
+        - `cd /`
+        - `cd ~`
+        - `cd ..`
+        - `cd -`
+        - `cd ~user`
+        - `$CDPATH` - like `$PATH`, but for `cd`
+    - `dirs` - alternative to `cd` that retains history of directories visited
+        - `dirs` - list directory history
+        - `pushd` - change directories and add it to the history
+        - `popd` - go back in the directory history
+    - links - references to other files elsewhere on the system
+        - `ln` - hard link
+        - `ln -s` - soft link/symbolic link/symlink
 
 ### Users/Groups/Permissions
 
@@ -142,10 +207,31 @@ conventional syntax:
 Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [opt1 [opt2]]
 ```
 
+### History
+
+The shell keeps a history of all commands entered. Learning to leverage this
+effectively will give you a huge productivity/efficiency boost.
+    - `history`
+    - `history 5`
+    - Settings
+        - `shopt -s histappend` - Only append to history file
+        - `export HISTCONTROL=ignoreboth:erasedups`
+        - `export HISTSIZE=10000
+        - `export HISTFILESIZE=50000`
+        - `export HISTIGNORE='ls:bg:fg:history'`
+    - Arrow keys
+    - `!!` - last command
+        - e.g. `sudo !!`
+    - `!\*` - all args of last command
+    - `!$` - last arg of last command
+    - `ctrl-r` - search backwards
+    - `ctrl-s` - search forwards
+    - `ctrl-g` - stop searching
+
 ### Help
 
 You can get help for almost any command right in your terminal
-
+    - `help`
     - `--help`
         - `man --help`
         - `cd --help`
@@ -155,43 +241,37 @@ You can get help for almost any command right in your terminal
         - `man cd` :thinking:
     - https://www.google.com
 
+### Environment variables
 
-## What is a program?
+Built-in:
+    - `$HOME`
+    - `$PWD`
+    - `$OLDPWD`
+    - `$USER`
+    - `$PATH`
+    - `$CDPATH`
+    - `$TERM`
+    - `$SHELL`
+    - `$DISPLAY`
+    - `$LANG`
+    - `$LANGUAGE`
+    - `$RANDOM`
+    - `$SECONDS`
+    - `$LINENO`
 
-A shell is special kind of program. But what is a program?
+Inline
+    - Only for the current command
+    - `VAR=whatever bash -c 'echo "$VAR"'` (pay attention to the quotes!)
 
-The word "program" is vague
-    - Source vs compiled 
-    - Compiled vs interpreted
+Exported
+    - For all subsequent commands/subshells
+    - In .bashrc or other sourced file
+    - `export VAR=whatever`
 
-Fundamentally, a program is set of instructions
-    - Compiled
-        - Human readable source code
-        - Compiled to binary
-        - Run directly as machine code
-            - `fact`
-    - Interpreted
-        - Human readable scripts
-        - Input to other programs
-            - `bash -c "echo yo"`
-            - `python my_script.py`
-            - `node index.js`
-        - Shebang (`#!/bin/bash`)
+### Quoting and string interpolation
 
-In any case, a program is **data**
-    - Von Neumann architecture
-        - Code/instructions are data
-        - "Von Neumann architecture is based on the stored-program computer
-          concept, where instruction data and program data are stored in the
-          same memory.  This design is still used in most computers produced
-          today."
-        - Revolutionary, at the time (1945)
-    - `which` - searches `$PATH` for the program with that name
-        - `which fact`
-        - `which bash`
-        - `which which` :mindblown:
-        - `which cd` :thinking:
-        - `type cd`
+### File Globbing
+
 
 ## Process Management
 
@@ -226,16 +306,15 @@ distros often use [systemd](https://en.wikipedia.org/wiki/Systemd).
 ### Viewing processes
 
 There are many ways to view information about running processes on your system
-
-- `ps` - processes with same user, associated with same terminal
-- `ps aux` - all running processes
-- `top`/`htop` - all processes, real-time, interactive
-- /proc - [Everything is a File](https://en.wikipedia.org/wiki/Everything_is_a_file)
-    - `sleep 1000 &`
-    - `stat /prod/PID`
-    - `cat /proc/PID/cmdline`
-    - `ll /proc/PID/cwd`
-    - `echo "yo" > /proc/PID/fd/1` :mindblown:
+    - `ps` - processes with same user, associated with same terminal
+    - `ps aux` - all running processes
+    - `top`/`htop` - all processes, real-time, interactive
+    - /proc - [Everything is a File](https://en.wikipedia.org/wiki/Everything_is_a_file)
+        - `sleep 1000 &`
+        - `stat /prod/PID`
+        - `cat /proc/PID/cmdline`
+        - `ll /proc/PID/cwd`
+        - `echo "yo" > /proc/PID/fd/1` :mindblown:
 
 ### Running processes in the background
 
@@ -307,50 +386,14 @@ Redirection
     - `<<< ''` - "Herestring" - redirect string literal to stdin
         - `cat <<< "yo"`
     - `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
-    - `<$()` - Treat output of command as a file
-        - `grep "bash" <$(cat README.md)`
+    - `<()` - Treat output of command as a file
+        - `grep "bash" <(cat README.md)`
     - /dev/null - a useful black hole
         `yes > /dev/null`
 
 Pipes and pipelines
     - `|` - use one process's stdout as the next process's stdin
     - `cat README.md | grep "bash"`
-
-## History
-
-    - `history`
-    - `history 5`
-    - Settings
-        - `shopt -s histappend` - Only append to history file
-        - `export HISTFILESIZE=10000`
-        - `export HISTSIZE=10000
-    - Arrow keys
-    - `!!` - last command
-        - e.g. `sudo !!`
-    - `!*` - all args of last command
-    - `!$` - last arg of last command
-    - `ctrl-r` - search backwards
-    - `ctrl-s` - search forwards
-    - `ctrl-g` - stop searching
-
-## Environment variables
-
-- Built-in:
-    - `$PWD`
-    - `$USER`
-    - `$PATH`
-    - `$CDPATH`
-    - `$TERM`
-    - `$RANDOM`
-    - `$SECONDS`
-    - `$LINENO`
-- Inline (e.g. `VAR=whatever bash -c 'echo "$VAR"'`)
-- `export`
-- `export` in .bashrc or other sourced file
-
-### Quoting and string interpolation
-
-### File Globbing
 
 ## Making your shell your own
 
@@ -366,67 +409,78 @@ Pipes and pipelines
     - Only for the remainder of the shell session, unless in .bashrc
 
 
-## Useful command appendix
+## Appendix
 
-    - File management
-        - `touch` - create a file, update access/modified times
-        - `mv` - move a file
-        - `mkdir` - make a directory
-        - `mkdir -p` - make a directory, and intermediate directories
-        - `rm` - delete a file
-        - `rm -rf` - remove recursively, force (DANGER)
-        - `rmdir` - delete an empty directory
-        - `cp ` - copy a file
-        - `rename` - rename files
-        - `chmod` - change file permissions
-        - `chown` - change file owner
-    - Reading files
-        - `cat`
-        - `less`
-        - `nano`
-        - `vim`
-        - `head`
-        - `tail`
-    - Find
-        - `grep`
-        - `find`
-        - `which`
-        - `whereis`
-        - `whatis`
-        - `man`
-        - `locate`
-    - Text processing
-        - `sed`
-        - `cut`
-        - `sort`
-        - `unique`
-        - `diff`
-        - `cmp`
-    - Network
-        - `ping`
-        - `traceroute`/`tracepath`
-        - `curl`
-        - `wget`
-        - `apt-get`
-        - `tar`
-        - `firefox`
-    - Other`
-        - `env`
-        - `alias`
-        - `cron`/`crontab`
-        - `notify-send`
-        - `echo`
-        - `xargs`
-        - `date`
-        - `cal`
-        - `source`
-        - `tee`
-        - `time`
-        - `bc`
-        - `yes`
-        - `fortune`
-        - `cowsay`
-        - `clear`
-        - `top`
-        - `htop`
-        - `write`/`wall`
+- Help
+    - `man`
+    - `which`
+    - `whereis`
+    - `whatis`
+- File management
+    - `touch` - create a file, update access/modified times
+    - `mv` - move a file
+    - `mkdir` - make a directory
+    - `mkdir -p` - make a directory, and intermediate directories
+    - `rm` - delete a file
+    - `rm -rf` - remove recursively, force (DANGER)
+    - `rmdir` - delete an empty directory
+    - `cp ` - copy a file
+    - `rename` - rename files
+    - `chmod` - change file permissions
+    - `chown` - change file owner
+- Viewing/Editing files
+    - `cat`
+    - `less`
+    - `nano`
+    - `vim`
+    - `head`
+    - `tail`
+- Searching
+    - `grep`
+    - `find`
+    - `locate`
+- Text Processing
+    - `cut`
+    - `sed`
+    - `awk`
+    - `sort`
+    - `unique`
+    - `diff`
+    - `cmp`
+- Process Management
+    - `su`
+    - `sudo`
+    - `ps`
+    - `top`
+    - `htop`
+- Networking
+    - `ping`
+    - `traceroute`/`tracepath`
+    - `ifconfig`
+    - `curl`
+    - `wget`
+    - `firefox`
+    - `google-chrome`
+    - `apt-get`
+- Compression
+    - `ar`
+    - `tar`
+    - `zip`
+- Miscellaneous
+    - `source`
+    - `env`
+    - `echo`
+    - `tee`
+    - `xargs`
+    - `clear`
+    - `write`/`wall`
+    - `alias`
+    - `cron`/`crontab`
+    - `notify-send`
+    - `date`
+    - `cal`
+    - `time`
+    - `bc`
+    - `yes`
+    - `fortune`
+    - `cowsay`
