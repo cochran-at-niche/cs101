@@ -444,8 +444,8 @@ Setting Variables
 
 Referencing Variables
 
-- $VAR
-- ${VAR}
+- `$VAR`
+- `${VAR}`
 - Single vs double quotes
     - `VAR=yo; echo "$VAR"`
     - `VAR=yo; echo '$VAR'`
@@ -456,20 +456,20 @@ Referencing Variables
 - `${VAR:?err}` - If parameter is set, use it. Otherwise print "err" and
   abort with exit code 1.
 - `${#VAR}` - Length of the string contained in the variable
-- `${VAR#pattern} - Remove shortest instance of "pattern" from beginning
+- `${VAR#pattern}` - Remove shortest instance of "pattern" from beginning
   of variable
-- `${VAR##pattern} - Remove longest instance of "pattern" from beginning
+- `${VAR##pattern}` - Remove longest instance of "pattern" from beginning
   of variable
-- `${VAR%pattern} - Remove shortest instance of "pattern" from end of
+- `${VAR%pattern}` - Remove shortest instance of "pattern" from end of
   variable
-- `${VAR%%pattern} - Remove longest instance of "pattern" from end of
+- `${VAR%%pattern}` - Remove longest instance of "pattern" from end of
   variable
 - `${VAR:pos}` - Variable starting from offset pos
 - `${VAR:pos:len}` - Variable starting from offset pos with length len
 - `${VAR/find/replace}` - Replace the first instance of "find" with
   "replace"
 - `${VAR//find/replace}` - Replace all instances of "find" with "replace"
-- `${!VAR} - Indirect reference to 
+- `${!VAR}` - Indirect reference to 
 
 ## Users/Groups
 
