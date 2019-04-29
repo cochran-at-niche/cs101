@@ -10,11 +10,12 @@
 ```
 
 The goals of this lesson are:
-    - Understand what a shell is
-    - Cover the basics of interacting with a shell 
-    - Learn tips and tricks to make the most of your shell
-    - Touch on some operating systems concepts
-    - Whet your curiosity to learn more
+
+- Understand what a shell is
+- Cover the basics of interacting with a shell 
+- Learn tips and tricks to make the most of your shell
+- Touch on some operating systems concepts
+- Whet your curiosity to learn more
 
 ## Table of Contents
 
