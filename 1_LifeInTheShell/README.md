@@ -12,7 +12,7 @@
 The goals of this lesson are:
     - Understand what a shell is
     - Cover the basics of interacting with a shell 
-    - Learn some tips and tricks to make the most of your shell 
+    - Learn tips and tricks to make the most of your shell
     - Touch on some operating systems concepts
     - Whet your curiosity to learn more
 
@@ -29,7 +29,6 @@ The goals of this lesson are:
 - [Commands](#commands)
   * [Usage](#usage)
   * [Help](#help)
-  * [Composition](#composition)
   * [File Globbing](#file-globbing)
   * [Environment Variables](#environment-variables)
 - [Users/Groups](#users-groups)
@@ -38,6 +37,7 @@ The goals of this lesson are:
   * [Viewing processes](#viewing-processes)
   * [Running processes in the background](#running-processes-in-the-background)
   * [Signals/killing processes](#signals-killing-processes)
+- [Composing Commands](#composing-commands)
 - [Scripting](#scripting)
   * [Shebang](#shebang)
   * [Sourcing](#sourcing)
@@ -87,11 +87,18 @@ Examples of terminals include:
 - ConEmu (Windows)
 - [Cool Retro Term](https://github.com/Swordfish90/cool-retro-term#screenshots)
 
-`ps aux | grep "bash\|term"`
+Run the following command. Note that the terminal process is separate from the
+bash process:
+
+```
+ps aux | grep "bash\|term"
+```
 
 ### REPL (Read Evaluate Print Loop)
 
 A shell is a special kind of program called a "Read Evaluate Print Loop".
+
+We could code a simple REPL ourselves without much difficulty.
 
 Examples of REPLs include:
 
@@ -110,6 +117,8 @@ Examples of shells:
 - fish (Friendly Interactive Shell)
 - ash (Almquist Shell)
 - dash (Debian Almquist Shell)
+
+We will be focusing on bash, one of the more popular and ubiquitous shells.
 
 ### What is a Program?
 
@@ -150,6 +159,8 @@ In any case, a program is **data**
     - `which which` :mindblown:
     - `which cd` :thinking:
 
+We will come back to this later.
+
 ## Navigation
 
 In a shell, you are always located within a particular directory in the
@@ -179,6 +190,7 @@ filesystem (the "current working directory"). You start within your user's
 
 Aliases are shortcuts for other commands. Some might already be present on your
 system.
+
 - `alias` - view all current aliases
 - `alias we=whatever` - create a new alias
 - Only for the current shell session (unless in .bashrc)
@@ -186,15 +198,15 @@ system.
 
 Links are file-system aliases. In other words, they are files that link to
 other files elsewhere on the system.
-    - `ln` - hard link
-    - `ln -s` - soft/symbolic link, or symlink
+
+- `ln` - hard link
+- `ln -s` - soft/symbolic link, or symlink
 
 ### History
 
-The shell keeps a history of all commands entered. Learning to leverage this
-effectively will give you a huge productivity/efficiency boost.
+The shell keeps a history of all commands entered.
 
-Basic history commands
+Basic history commands include:
 
 - `history`
 - `history 5`
@@ -206,7 +218,7 @@ Basic history commands
 - `!*` - all args of last command
 - `!$` - last arg of last command
 
-Useful settings
+Useful settings:
 
 - `shopt -s histappend` - Only append to history file
 - `export HISTCONTROL=ignoreboth:erasedups`
@@ -214,7 +226,7 @@ Useful settings
 - `export HISTFILESIZE=50000`
 - `export HISTIGNORE='ls:bg:fg:history'`
 
-Searching history
+Searching history:
 
 - `ALT-SHIFT-,` - Jump to beginning of history
 - `ALT-SHIFT-.` - Jump to end of history
@@ -225,15 +237,14 @@ Searching history
 - `CTRL-n` - Go forward in history
 - `ALT-r` - Revert changes to line in history
 
-
 ### Keyboard Shortcuts
 
-Bash has a bunch of built-in keyboard shortcuts that make it much easier to
-create/edit/delete text at the command line. These may differ between
-environments, and depending on which options have been set. Some programs may
-also interfere with some of these shortcuts (e.g. `tmux`/`screen`/`byobu`).
+Bash has a bunch of built-in keyboard shortcuts that make it easier to
+create/edit/delete text. These may differ between environments, and
+depending on which options have been set. Some programs may also interfere
+with some of these shortcuts (e.g. `tmux`/`screen`/`byobu`).
 
-Movement
+Movement:
 
 - `CTRL-b` - Move cursor back one character 
 - `CTRL-f` - Move cursor forward one character
@@ -243,7 +254,7 @@ Movement
 - `CTRL-e` - Move to end of line
 - `CTRL-xx` - Move cursor between start of line and current position
 
-Editing
+Editing:
 
 - `CTRL-t` - Swap last two characters
 - `ALT-t` Swap last two words
@@ -253,7 +264,7 @@ Editing
 - `ALT-l` - Lowercase from cursor to end of word
 - `CTRL+\_` - Undo
 
-Deleting
+Deleting:
 
 - `CTRL-h` - Delete character before cursor
 - `CTRL-d` - Delete character under cursor
@@ -262,7 +273,7 @@ Deleting
 - `CTRL-u` - Delete everything before cursor
 - `CTRL-k` - Delete everything after cursor
 
-Control
+Control:
 
 - `CTRL-j` - Enter/return
 - `CTRL-o` - Enter/return
@@ -337,62 +348,6 @@ You can get help for most commands right in your terminal
 - `whatis` - brief description of command
 - `firefox www.google.com`
 
-### Composition
-
-"Make each program do one thing well."
-"Expect the output of every program to become the input to another, as yet unknown, program."
-- [The Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
-
-Subshells
-
-- `()` - Runs the commands inside the parentheses in a separate subshell
-    - `( ps aux | grep bash )`
-
-Combining commands
-
-- `;` - run multiple commands, one after the other
-    - `sleep 10; echo "yo"`
-- `&&` - only run a command if the first command succeeds
-    - `bash -c 'exit 0' && echo "yo"`
-    - `bash -c 'exit 1' && echo "yo"`
-- `||` - only run a command if the first command fails
-    - `bash -c 'exit 0' || echo "yo"`
-    - `bash -c 'exit 1' || echo "yo"`
-- `$()` (or backticks) - "command substitution"
-    - `echo "Today's date is: $(date)"`
-    - ``echo "Today's date is: `date```
-
-Redirection
-
-- `<` - redirect file to stdin
-    - `grep "bash" < README.md` vs `grep "bash" README.md`
-- `>` - redirect stdout to file (truncate it first)
-    - `echo "yo" > out.txt`
-- `>>` - redirect stdout to file (append to it)
-    - `echo "yo" > out.txt && echo "dude" >> out.txt`
-- `2>&1` - redirect stderr to stdin
-- `&>` - redirect both stdout and stderr to a file
-- `<<< ''` - "Herestring" - redirect string literal to stdin
-    - `cat <<< "yo"`
-- `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
-- `<()` - Treat output of command as a file
-    - `grep "bash" <(cat README.md)`
-- /dev/null - a useful black hole
-    - `yes > /dev/null`
-
-Pipes and pipelines
-
-- `|` - use one process's stdout as the next process's stdin
-- `cat README.md | grep "bash"`
-
-Exec and eval
-
-- `exec` - peplace the current shell with the given command
-    - `exec bash`
-    - `exec bc`
-- `eval` - run the arguments as a command in the current shell
-    - `cmd="bar=foo" eval $cmd; echo $bar`
-
 ### File Globbing
 
 File "globbing" is a built-in mechanism for expanding file path wildcard
@@ -402,7 +357,7 @@ a different thing.
 The rules are
 
 - `?` - matches any single character
-- `*` - matches any string, including the empty string
+- `\*` - matches any string, including the empty string
 - `[abc]` - matches any of the characters contained within the brackets
 - `[!abc]` - matches any character not contained within the brackets
 - `[a-c]` - matches any character in the range from a to c
@@ -602,6 +557,65 @@ Signals
 
 - `kill -l` - list all signals
 - `man 7 signal` - manual page for signals
+
+## Composing Commands
+
+"Make each program do one thing well."
+
+"Expect the output of every program to become the input to another, as yet unknown, program."
+
+[The Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
+
+Subshells
+
+- `()` - Runs the commands inside the parentheses in a separate subshell
+    - `( ps aux | grep bash )`
+
+Combining commands
+
+- `;` - run multiple commands, one after the other
+    - `sleep 10; echo "yo"`
+- `&&` - only run a command if the first command succeeds
+    - `bash -c 'exit 0' && echo "yo"`
+    - `bash -c 'exit 1' && echo "yo"`
+- `||` - only run a command if the first command fails
+    - `bash -c 'exit 0' || echo "yo"`
+    - `bash -c 'exit 1' || echo "yo"`
+- `$()` (or backticks) - "command substitution"
+    - `echo "Today's date is: $(date)"`
+    - ``echo "Today's date is: `date```
+
+Redirection
+
+- `<` - redirect file to stdin
+    - `grep "bash" < README.md` vs `grep "bash" README.md`
+- `>` - redirect stdout to file (truncate it first)
+    - `echo "yo" > out.txt`
+- `>>` - redirect stdout to file (append to it)
+    - `echo "yo" > out.txt && echo "dude" >> out.txt`
+- `2>&1` - redirect stderr to stdin
+- `&>` - redirect both stdout and stderr to a file
+- `<<< ''` - "Herestring" - redirect string literal to stdin
+    - `cat <<< "yo"`
+- `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
+- `<()` - Treat output of command as a file
+    - `grep "bash" <(cat README.md)`
+- /dev/null - a useful black hole
+    - `yes > /dev/null`
+
+Pipes and pipelines
+
+- `|` - use one process's stdout as the next process's stdin
+- `cat README.md | grep "bash"`
+
+Exec and eval
+
+- `exec` - peplace the current shell with the given command
+    - `exec bash`
+    - `exec bc`
+- `eval` - run the arguments as a command in the current shell
+    - `cmd="bar=foo" eval $cmd; echo $bar`
+
 
 ## Scripting
 
