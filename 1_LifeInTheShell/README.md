@@ -740,6 +740,7 @@ Compression
 
 Miscellaneous
 
+- `watch` (shout out to Austin)
 - `source`
 - `env`
 - `echo`
