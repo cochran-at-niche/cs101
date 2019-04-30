@@ -19,3 +19,14 @@ computers, but all skill levels are welcome. These lessons will be most
 beneficial if you bring your own computer and try things yourself. Some
 lessons will be more focused on Linux than other operating systems, but the
 concepts are universal, and should translate.
+
+## Potential Topics
+
+* Optimizing SQL Queries
+* Git
+* Networking
+* Concurrency
+* Golang
+* Elasticsearch
+* Kafka
+* Vim
