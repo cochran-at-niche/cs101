@@ -617,6 +617,13 @@ Exec and eval
 - `eval` - run the arguments as a command in the current shell
     - `cmd="bar=foo" eval $cmd; echo $bar`
 
+Puzzle
+
+What does this print?
+
+`(echo red; echo green 1>&2) | echo blue`
+
+[Explanation](https://utcc.utoronto.ca/~cks/space/blog/unix/ShellPipelineIndeterminate)
 
 ## Scripting
 
