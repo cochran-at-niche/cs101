@@ -223,7 +223,7 @@ Useful settings:
 
 - `shopt -s histappend` - Only append to history file
 - `export HISTCONTROL=ignoreboth:erasedups`
-- `export HISTSIZE=10000
+- `export HISTSIZE=10000`
 - `export HISTFILESIZE=50000`
 - `export HISTIGNORE='ls:bg:fg:history'`
 
