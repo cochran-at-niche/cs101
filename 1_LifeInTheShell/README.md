@@ -571,7 +571,9 @@ For more information, see `man 7 glob`
 
 #### Pipes and pipelines
 
-Interprocess communication mechanism.
+Interprocess communication mechanism. Uses one process's stdout as the next
+process's stdin. In the shell, orchestrated via the `|` character. Can be
+chained together to create a pipeline.
 
 ![Pipeline](pipeline.png)
 
@@ -580,15 +582,6 @@ and the second process reads from it.
 
 ![Pipe](pipe.png)
 
-`|` - use one process's stdout as the next process's stdin
-
-```bash
-fortune | cowsay
-cat README.md | grep "bash"
-git blame | grep "Nathaniel J Cochran" | wc -l
-git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
-```
-
 If the first process exits, the write end of the pipe will be closed. The
 second process can continue to read from the pipe until it reaches the end,
 indicated by EOF.
@@ -596,6 +589,13 @@ indicated by EOF.
 If the second process exits first, the read end of the pipe will be closed. If
 the first process attempts to write to the broken pipe, it will receive a
 SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
+
+```bash
+fortune | cowsay
+cat README.md | grep "bash"
+git blame | grep "Nathaniel J Cochran" | wc -l
+git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
+```
 
 #### Exec and eval
 
