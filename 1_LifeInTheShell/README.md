@@ -63,7 +63,7 @@ The goals of this lesson are:
 What does this print?
 
 ```bash
-(echo red; echo green 1>&2) | echo blue
+( echo red; echo green 1>&2 ) | echo blue
 ```
 
 ## What is a shell?
@@ -572,8 +572,13 @@ Signals
 
 ### Subshells
 
-- `bash -c "ps aux | grep bash"`
-- `( ps aux | grep bash )`
+Spawn a new instance of bash (a child process), and run the commands within it
+
+```bash
+bash -c "ps aux | grep bash"
+( ps aux | grep bash )
+( echo red; echo green 1>&2 )
+```
 
 ### Combinations
 
@@ -581,6 +586,7 @@ Signals
 
     ```bash
     sleep 10; echo "yo"
+    echo red; echo green
     ```
 
 - `&&` - only run a command if the first command succeeds
