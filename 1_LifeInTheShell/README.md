@@ -38,16 +38,16 @@ The goals of this lesson are:
   - [Usage](#usage)
   - [Help](#help)
   - [File Globbing](#file-globbing)
-  - [Composition](#composition)
-    - [Subshells](#subshells)
-    - [Combinations](#combinations)
-    - [Redirection](#redirection)
-    - [Pipes and pipelines](#pipes-and-pipelines)
-    - [Exec and eval](#exec-and-eval)
 - [Process Management](#process-management)
   - [Viewing](#viewing)
   - [Running in the background](#running-in-the-background)
   - [Signals/killing](#signalskilling)
+- [Composing Commands](#composing-commands)
+  - [Subshells](#subshells)
+  - [Combinations](#combinations)
+  - [Redirection](#redirection)
+  - [Pipes and pipelines](#pipes-and-pipelines)
+  - [Exec and eval](#exec-and-eval)
 - [Solving the Puzzle](#solving-the-puzzle)
 - [Users/Groups](#usersgroups)
   - [Permissions](#permissions)
@@ -463,155 +463,6 @@ The rules are
 
 For more information, see `man 7 glob`
 
-### Composition
-
-"Make each program do one thing well."
-
-"Expect the output of every program to become the input to another, as yet unknown, program."
-
-[The Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
-
-#### Subshells
-
-- `bash -c "ps aux | grep bash"`
-- `( ps aux | grep bash )`
-
-#### Combinations
-
-- `;` - run multiple commands, one after the other
-
-    ```bash
-    sleep 10; echo "yo"
-    ```
-
-- `&&` - only run a command if the first command succeeds
-
-    ```bash
-    bash -c 'exit 0' && echo "yo"
-    bash -c 'exit 1' && echo "yo"
-    ```
-
-- `||` - only run a command if the first command fails
-
-    ```bash
-    bash -c 'exit 0' || echo "yo"
-    bash -c 'exit 1' || echo "yo"
-    ```
-
-- `$()` (or backticks) - "command substitution"
-
-    ```bash
-    echo "Today's date is: $(date)"
-    echo "Today's date is: `date`
-    ```
-
-#### Redirection
-
-![Standard Steams](std.png)
-
-- `<` - redirect file to stdin
-
-    ```bash
-    grep "bash" < README.md`
-    ```
-
-    Alternatively, many commands take input filenames as arguments:
-
-    ```bash
-    grep "bash" README.md
-    ```
-
-- `<()` - Treat output of command as a file redirected to stdin
-
-    ```bash
-    grep "bash" <(cat README.md)
-    ```
-
-- `>` - redirect stdout to file (truncate it first)
-
-    ```bash
-    echo "yo" > out.txt
-    ```
-
-- `>>` - redirect stdout to file (append to it)
-
-    ```bash
-    echo "yo" > out.txt && echo "dude" >> out.txt
-    ```
-
-- `2>&1` - redirect stderr to stdin
-- `1>&2` - redirect stdout to stderr
-
-    ```bash
-    echo green 1>&2
-    ```
-
-- `&>` - redirect both stdout and stderr to a file
-- `<<< ''` - "Herestring" - redirect string literal to stdin
-
-    ```bash
-    cat <<< "yo"
-    ```
-
-- `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
-
-    ```bash
-    cat << END
-    yooo
-    yoo
-    yo
-    END
-    ```
-
-- `/dev/null` - a useful black hole
-
-    ```bash
-    yes > /dev/null
-    ```
-
-#### Pipes and pipelines
-
-Interprocess communication mechanism. Uses one process's stdout as the next
-process's stdin. In the shell, orchestrated via the `|` character. Can be
-chained together to create a pipeline.
-
-![Pipeline](pipeline.png)
-
-Both process are started in parallel. The first process writes to a buffer,
-and the second process reads from it.
-
-![Pipe](pipe.png)
-
-If the first process exits, the write end of the pipe will be closed. The
-second process can continue to read from the pipe until it reaches the end,
-indicated by EOF.
-
-If the second process exits first, the read end of the pipe will be closed. If
-the first process attempts to write to the broken pipe, it will receive a
-SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
-
-```bash
-fortune | cowsay
-cat README.md | grep "bash"
-git blame | grep "Nathaniel J Cochran" | wc -l
-git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
-```
-
-#### Exec and eval
-
-- `exec` - peplace the current shell with the given command
-
-    ```bash
-    exec bash
-    exec bc
-    ```
-
-- `eval` - run the arguments as a command in the current shell
-
-    ```bash
-    cmd="bar=foo" eval $cmd; echo $bar
-    ```
-
 ## Process Management
 
 A process is an instance of an executing program.
@@ -710,6 +561,156 @@ Signals
 
 - `kill -l` - list all signals
 - `man 7 signal` - manual page for signals
+
+## Composing Commands
+
+"Make each program do one thing well."
+
+"Expect the output of every program to become the input to another, as yet unknown, program."
+
+[The Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
+
+### Subshells
+
+- `bash -c "ps aux | grep bash"`
+- `( ps aux | grep bash )`
+
+### Combinations
+
+- `;` - run multiple commands, one after the other
+
+    ```bash
+    sleep 10; echo "yo"
+    ```
+
+- `&&` - only run a command if the first command succeeds
+
+    ```bash
+    bash -c 'exit 0' && echo "yo"
+    bash -c 'exit 1' && echo "yo"
+    ```
+
+- `||` - only run a command if the first command fails
+
+    ```bash
+    bash -c 'exit 0' || echo "yo"
+    bash -c 'exit 1' || echo "yo"
+    ```
+
+- `$()` (or backticks) - "command substitution"
+
+    ```bash
+    echo "Today's date is: $(date)"
+    echo "Today's date is: `date`
+    ```
+
+### Redirection
+
+![Standard Steams](std.png)
+
+- `<` - redirect file to stdin
+
+    ```bash
+    grep "bash" < README.md`
+    ```
+
+    Alternatively, many commands take input filenames as arguments:
+
+    ```bash
+    grep "bash" README.md
+    ```
+
+- `<()` - Treat output of command as a file redirected to stdin
+
+    ```bash
+    grep "bash" <(cat README.md)
+    ```
+
+- `>` - redirect stdout to file (truncate it first)
+
+    ```bash
+    echo "yo" > out.txt
+    ```
+
+- `>>` - redirect stdout to file (append to it)
+
+    ```bash
+    echo "yo" > out.txt && echo "dude" >> out.txt
+    ```
+
+- `2>&1` - redirect stderr to stdin
+- `1>&2` - redirect stdout to stderr
+
+    ```bash
+    echo green 1>&2
+    ```
+
+- `&>` - redirect both stdout and stderr to a file
+- `<<< ''` - "Herestring" - redirect string literal to stdin
+
+    ```bash
+    cat <<< "yo"
+    ```
+
+- `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
+
+    ```bash
+    cat << END
+    yooo
+    yoo
+    yo
+    END
+    ```
+
+- `/dev/null` - a useful black hole
+
+    ```bash
+    yes > /dev/null
+    ```
+
+### Pipes and pipelines
+
+Interprocess communication mechanism. Uses one process's stdout as the next
+process's stdin. In the shell, orchestrated via the `|` character. Can be
+chained together to create a pipeline.
+
+![Pipeline](pipeline.png)
+
+Both process are started in parallel. The first process writes to a buffer,
+and the second process reads from it.
+
+![Pipe](pipe.png)
+
+If the first process exits, the write end of the pipe will be closed. The
+second process can continue to read from the pipe until it reaches the end,
+indicated by EOF.
+
+If the second process exits first, the read end of the pipe will be closed. If
+the first process attempts to write to the broken pipe, it will receive a
+SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
+
+```bash
+fortune | cowsay
+cat README.md | grep "bash"
+git blame | grep "Nathaniel J Cochran" | wc -l
+git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
+```
+
+### Exec and eval
+
+- `exec` - peplace the current shell with the given command
+
+    ```bash
+    exec bash
+    exec bc
+    ```
+
+- `eval` - run the arguments as a command in the current shell
+
+    ```bash
+    cmd="bar=foo" eval $cmd; echo $bar
+    ```
+
 
 ## Solving the Puzzle
 
