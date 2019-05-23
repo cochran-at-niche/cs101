@@ -518,23 +518,55 @@ For more information, see `man 7 glob`
 ![Standard Steams](std.png)
 
 - `<` - redirect file to stdin
-    - `grep "bash" < README.md`
-    - Alternatively, many commands take input filenames as arguments: `grep "bash" README.md`
+
+    ```bash
+    grep "bash" < README.md`
+    ```
+
+    Alternatively, many commands take input filenames as arguments:
+
+    ```bash
+    grep "bash" README.md
+    ```
+
 - `<()` - Treat output of command as a file redirected to stdin
-    - `grep "bash" <(cat README.md)`
+
+    ```bash
+    grep "bash" <(cat README.md)
+    ```
+
 - `>` - redirect stdout to file (truncate it first)
-    - `echo "yo" > out.txt`
+
+    ```bash
+    echo "yo" > out.txt
+    ```
+
 - `>>` - redirect stdout to file (append to it)
-    - `echo "yo" > out.txt && echo "dude" >> out.txt`
+
+    ```bash
+    echo "yo" > out.txt && echo "dude" >> out.txt
+    ```
+
 - `2>&1` - redirect stderr to stdin
 - `1>&2` - redirect stdout to stderr
-    - `echo green 1>&2`
+
+    ```bash
+    echo green 1>&2
+    ```
+
 - `&>` - redirect both stdout and stderr to a file
 - `<<< ''` - "Herestring" - redirect string literal to stdin
-    - `cat <<< "yo"`
+
+    ```bash
+    cat <<< "yo"
+    ```
+
 - `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
 - /dev/null - a useful black hole
-    - `yes > /dev/null`
+
+    ```bash
+    yes > /dev/null
+    ```
 
 #### Pipes and pipelines
 
@@ -543,10 +575,22 @@ For more information, see `man 7 glob`
 Interprocess communication mechanism.
 
 - `|` - use one process's stdout as the next process's stdin
-- `fortune | cowsay`
-- `cat README.md | grep "bash"`
-- `git blame | grep "Nathaniel J Cochran" | wc -l`
-- `git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n`
+
+    ```bash
+    fortune | cowsay
+    ```
+
+    ```bash
+    cat README.md | grep "bash"
+    ```
+
+    ```bash
+    git blame | grep "Nathaniel J Cochran" | wc -l
+    ```
+
+    ```bash
+    git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
+    ```
 
 Both process are started in parallel. The first process writes to a buffer,
 and the second process reads from it.
@@ -564,10 +608,20 @@ SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
 #### Exec and eval
 
 - `exec` - peplace the current shell with the given command
-    - `exec bash`
-    - `exec bc`
+    ```bash
+
+    exec bash
+    ```
+
+    ```bash
+    exec bc
+    ```
+
 - `eval` - run the arguments as a command in the current shell
-    - `cmd="bar=foo" eval $cmd; echo $bar`
+
+    ```bash
+    cmd="bar=foo" eval $cmd; echo $bar
+    ```
 
 ## Process Management
 
@@ -608,18 +662,36 @@ There are many ways to view information about running processes on your system
 - `ps aux` - all running processes
 - `top`/`htop` - all processes, real-time, interactive
 - /proc - [Everything is a File](https://en.wikipedia.org/wiki/Everything_is_a_file)
-    - `sleep 1000 &`
-    - `stat /prod/PID`
-    - `cat /proc/PID/cmdline`
-    - `ll /proc/PID/cwd`
-    - `echo "yo" > /proc/PID/fd/1` :mindblown:
+
+    ```bash
+    sleep 1000 &
+    ```
+
+    ```bash
+    stat /prod/PID
+    ```
+
+    ```bash
+    cat /proc/PID/cmdline
+    ```
+
+    ```bash
+    ll /proc/PID/cwd
+    ```
+
+    ```bash
+    echo "yo" > /proc/PID/fd/1` :mindblown
+    ```
 
 ### Running in the background
 
 When starting a process
 
 - `&` at end of command
-- e.g. `sleep 10 && echo "yo" &`
+
+    ```bash
+    sleep 10 && echo "yo" &
+    ```
 
 If already in foreground
 
