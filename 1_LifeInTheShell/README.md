@@ -691,7 +691,7 @@ SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
 
 ```bash
 fortune | cowsay
-cat README.md | grep "bash"
+echo '[{"key":"value1"}, {"key":"value2"}]' | jq .[].key
 git blame | grep "Nathaniel J Cochran" | wc -l
 git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
 ```
