@@ -479,35 +479,39 @@ For more information, see `man 7 glob`
 #### Combinations
 
 - `;` - run multiple commands, one after the other
-    - `sleep 10; echo "yo"`
+
+    ```bash
+    sleep 10; echo "yo"
+    ```
+
 - `&&` - only run a command if the first command succeeds
 
-      ```bash
-      bash -c 'exit 0' && echo "yo"
-      ```
+    ```bash
+    bash -c 'exit 0' && echo "yo"
+    ```
 
-      ```bash
-      bash -c 'exit 1' && echo "yo"
-      ```
+    ```bash
+    bash -c 'exit 1' && echo "yo"
+    ```
 - `||` - only run a command if the first command fails
 
-      ```bash
-      bash -c 'exit 0' || echo "yo"
-      ```
+    ```bash
+    bash -c 'exit 0' || echo "yo"
+    ```
 
-      ```bash
-      bash -c 'exit 1' || echo "yo"
-      ```
+    ```bash
+    bash -c 'exit 1' || echo "yo"
+    ```
 
 - `$()` (or backticks) - "command substitution"
 
-      ```bash
-      echo "Today's date is: $(date)"
-      ```
+    ```bash
+    echo "Today's date is: $(date)"
+    ```
 
-      ```bash
-      echo "Today's date is: `date`
-      ```
+    ```bash
+    echo "Today's date is: `date`
+    ```
 
 #### Redirection
 
