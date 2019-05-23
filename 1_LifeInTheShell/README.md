@@ -17,32 +17,54 @@ The goals of this lesson are:
 - Touch on some operating systems concepts
 - Whet your curiosity to learn more
 
+<!-- doctoc README.md --github --title '## Table of Contents' -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [What is a shell?](#what-is-a-shell-)
-  * [Not a Terminal](#not-a-terminal)
-  * [REPL (Read Evaluate Print Loop)](#repl--read-evaluate-print-loop-)
-  * [What is a Program?](#what-is-a-program-)
-- [Navigation](#navigation)
-  * [Aliases](#aliases)
-  * [History](#history)
-  * [Keyboard Shortcuts](#keyboard-shortcuts)
+- [Puzzle](#puzzle)
+- [What is a shell?](#what-is-a-shell)
+  - [Not a Terminal](#not-a-terminal)
+  - [REPL (Read Evaluate Print Loop)](#repl-read-evaluate-print-loop)
+  - [What is a Program?](#what-is-a-program)
+- [Basics](#basics)
+  - [Sourcing](#sourcing)
+  - [Navigation](#navigation)
+  - [Aliases](#aliases)
+  - [History](#history)
+  - [Keyboard Shortcuts](#keyboard-shortcuts)
 - [Commands](#commands)
-  * [Usage](#usage)
-  * [Help](#help)
-  * [File Globbing](#file-globbing)
-  * [Environment Variables](#environment-variables)
-- [Users/Groups](#users-groups)
-  * [Permissions](#permissions)
+  - [Usage](#usage)
+  - [Help](#help)
+  - [Environment Variables](#environment-variables)
+  - [File Globbing](#file-globbing)
+  - [Composition](#composition)
+    - [Subshells](#subshells)
+    - [Combinations](#combinations)
+    - [Redirection](#redirection)
+    - [Pipes and pipelines](#pipes-and-pipelines)
+    - [Exec and eval](#exec-and-eval)
 - [Process Management](#process-management)
-  * [Viewing processes](#viewing-processes)
-  * [Running processes in the background](#running-processes-in-the-background)
-  * [Signals/killing processes](#signals-killing-processes)
-- [Composing Commands](#composing-commands)
+  - [Viewing processes](#viewing-processes)
+  - [Running processes in the background](#running-processes-in-the-background)
+  - [Signals/killing processes](#signalskilling-processes)
+- [Solving the Puzzle](#solving-the-puzzle)
+- [Users/Groups](#usersgroups)
+  - [Permissions](#permissions)
 - [Scripting](#scripting)
-  * [Shebang](#shebang)
-  * [Sourcing](#sourcing)
-- [Appendix: Useful Commands](#appendix--useful-commands)
+  - [Shebang](#shebang)
+  - [Environment Variables](#environment-variables-1)
+- [Appendix: Useful Commands](#appendix-useful-commands)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Puzzle
+
+What does this print?
+
+```bash
+(echo red; echo green 1>&2) | echo blue
+```
 
 ## What is a shell?
 
@@ -57,12 +79,11 @@ Operating system services:
 - File Management and I/O
 - Device Management
 - Memory Management
-- Process Management
-- Scheduling
+- Process Scheduling
 - Threading
 - Time
 - Network I/O (i.e. sockets)
-- Interprocess Communication (e.g. signals, pipes)
+- Interprocess Communication (e.g. shared memory, pipes, signals)
 
 See [The Linux Programming Interface](https://github.com/shihyu/Linux_Programming/blob/master/books/The%20Linux%20Programming%20Interface%20-%20A%20Linux%20and%20UNIX%20System%20Programming%20Handbook.pdf)
 
@@ -71,8 +92,14 @@ See [The Linux Programming Interface](https://github.com/shihyu/Linux_Programmin
 A shell is **not** a terminal! These are different concepts (even if we often
 use the words interchangeably in normal conversation).
 
-A terminal emulator is a software program that emulates an old hardware
+[This](https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/DEC_VT100_terminal.jpg/1200px-DEC_VT100_terminal.jpg) is a terminal.
+
+A terminal **emulator** is a software program that emulates an old hardware
 terminal, much like a gameboy emulator emulates a physical gameboy.
+
+A terminal is often referred to as a "tty", which is derived from the word
+"teletype". A terminal emulator is often referred to as "pts", which means
+"pseudo-terminal"
 
 A shell is an interactive program whose input/output is typically
 provided/displayed via a terminal.
@@ -123,7 +150,7 @@ We will be focusing on bash, one of the more popular and ubiquitous shells.
 
 ### What is a Program?
 
-A shell is a REPL, which is a special kind of program. But what is a program?
+A shell is a REPL, which is a kind of program. But what is a program?
 
 The word "program" can be vague
 
@@ -162,7 +189,27 @@ In any case, a program is **data**
 
 We will come back to this later.
 
-## Navigation
+## Basics
+
+### Sourcing
+
+"Sourcing" a file refers to the process of running commands from a file as if
+they were executed within the current shell. This is how files like `.bashrc`
+and `.bash_profile` are run at the start of a session. Files can be sourced
+with either the `source` command or the `.` directive.
+
+- `source ~/.bashrc`
+- `. ~/.bashrc` 
+
+Sourcing a file makes it possible for shell-specific configuration to take
+effect - for example, `export` and `alias` commands.
+
+Some files are sourced automatically at the start of a shell session:
+
+- `.bashrc` - sourced at start of interactive non-login shells
+- `.profile`/`.bash_profile` - sourced at start of login shells
+
+### Navigation
 
 In a shell, you are always located within a particular directory in the
 filesystem (the "current working directory"). You start within your user's
@@ -190,15 +237,16 @@ filesystem (the "current working directory"). You start within your user's
 ### Aliases
 
 Aliases are shortcuts for other commands. Some might already be present on your
-system.
+system. Take the opportunity to alias commands you type regularly!
 
 - `alias` - view all current aliases
-- `alias we=whatever` - create a new alias
+- `alias dc=docker-compose` - create a new alias
 - Only for the current shell session (unless in .bashrc)
-- Also, see `git config --global alias.we "whatever"`
+- Also, see `git config --global alias.co "checkout"`
 
 Links are file-system aliases. In other words, they are files that link to
-other files elsewhere on the system.
+other files elsewhere on the system. Create links to make it easier to jump
+to often-visited places in your file system.
 
 - `ln` - hard link
 - `ln -s` - soft/symbolic link, or symlink
@@ -294,10 +342,10 @@ Use `bind -P` to see a list of your current key bindings.
 
 ## Commands
 
-A shell command can include the following
+A shell command has the following parts:
 
 - Program name
-    - Searches for it in the `$PATH`
+    - Searches for it in `$PATH`
     - Use `which` to see which program will be called
 - Arguments - technically, everything that comes after the command name
     - Options - e.g. `docker-compose -f docker-compose.backend.yml`
@@ -349,27 +397,11 @@ You can get help for most commands right in your terminal
 - `whatis` - brief description of command
 - `firefox www.google.com`
 
-### File Globbing
-
-File "globbing" is a built-in mechanism for expanding file path wildcard
-patterns. It is often confused with regular expressions, but it is technically
-a different thing.
-
-The rules are
-
-- `?` - matches any single character
-- `\*` - matches any string, including the empty string
-- `[abc]` - matches any of the characters contained within the brackets
-- `[!abc]` - matches any character not contained within the brackets
-- `[a-c]` - matches any character in the range from a to c
-
-For more information, see `man 7 glob`
-
 ### Environment Variables
 
-Environment variables are parameters that can affect the behavoir of programs,
-and can be used in string interpolation. Use the `env`/`printenv` commands to
-view a list of all currently set environment variables.
+Environment variables are parameters that can affect the behavior of programs.
+Use the `env`/`printenv` commands to view a list of all currently set
+environment variables.
 
 Built-in Variables
 
@@ -398,34 +430,216 @@ Setting Variables
     - Often in .bashrc or other sourced file
     - `export VAR=whatever`
 
-Referencing Variables
+### File Globbing
 
-- `$VAR`
-- `${VAR}`
-- Single vs double quotes
-    - `VAR=yo; echo "$VAR"`
-    - `VAR=yo; echo '$VAR'`
-- `${VAR:-default}` - Use "default" as the default value, if the variable
-  is not set
-- `${VAR:=default}` - If variable is not set, set it to "default"
-- `${VAR:+alt}` - If variable is set, use "alt" instead
-- `${VAR:?err}` - If parameter is set, use it. Otherwise print "err" and
-  abort with exit code 1.
-- `${#VAR}` - Length of the string contained in the variable
-- `${VAR#pattern}` - Remove shortest instance of "pattern" from beginning
-  of variable
-- `${VAR##pattern}` - Remove longest instance of "pattern" from beginning
-  of variable
-- `${VAR%pattern}` - Remove shortest instance of "pattern" from end of
-  variable
-- `${VAR%%pattern}` - Remove longest instance of "pattern" from end of
-  variable
-- `${VAR:pos}` - Variable starting from offset pos
-- `${VAR:pos:len}` - Variable starting from offset pos with length len
-- `${VAR/find/replace}` - Replace the first instance of "find" with
-  "replace"
-- `${VAR//find/replace}` - Replace all instances of "find" with "replace"
-- `${!VAR}` - Indirect reference to 
+File "globbing" is a built-in mechanism for expanding file path wildcard
+patterns. It is often confused with regular expressions, but it is technically
+a different thing.
+
+The rules are
+
+- `?` - matches any single character
+- `\*` - matches any string, including the empty string
+- `[abc]` - matches any of the characters contained within the brackets
+- `[!abc]` - matches any character not contained within the brackets
+- `[a-c]` - matches any character in the range from a to c
+
+For more information, see `man 7 glob`
+
+### Composition
+
+"Make each program do one thing well."
+
+"Expect the output of every program to become the input to another, as yet unknown, program."
+
+[The Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
+
+#### Subshells
+
+- `bash -c "ps aux | grep bash"`
+- `( ps aux | grep bash )`
+
+#### Combinations
+
+- `;` - run multiple commands, one after the other
+    - `sleep 10; echo "yo"`
+- `&&` - only run a command if the first command succeeds
+    - `bash -c 'exit 0' && echo "yo"`
+    - `bash -c 'exit 1' && echo "yo"`
+- `||` - only run a command if the first command fails
+    - `bash -c 'exit 0' || echo "yo"`
+    - `bash -c 'exit 1' || echo "yo"`
+- `$()` (or backticks) - "command substitution"
+    - `echo "Today's date is: $(date)"`
+    - ``echo "Today's date is: `date```
+
+#### Redirection
+
+- `<` - redirect file to stdin
+    - `grep "bash" < README.md`
+    - Alternatively, many commands take input filenames as arguments: `grep "bash" README.md`
+- `<()` - Treat output of command as a file redirected to stdin
+    - `grep "bash" <(cat README.md)`
+- `>` - redirect stdout to file (truncate it first)
+    - `echo "yo" > out.txt`
+- `>>` - redirect stdout to file (append to it)
+    - `echo "yo" > out.txt && echo "dude" >> out.txt`
+- `2>&1` - redirect stderr to stdin
+- `1>&2` - redirect stdout to stderr
+    - `echo green 1>&2`
+- `&>` - redirect both stdout and stderr to a file
+- `<<< ''` - "Herestring" - redirect string literal to stdin
+    - `cat <<< "yo"`
+- `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
+- /dev/null - a useful black hole
+    - `yes > /dev/null`
+
+#### Pipes and pipelines
+
+Interprocess communication mechanism.
+
+- `|` - use one process's stdout as the next process's stdin
+- `cat README.md | grep "bash"`
+
+Both process are started in parallel. The first process writes to a buffer,
+and the second process reads from it.
+
+![pipe.png]
+
+If the first process exits, the write end of the pipe will be closed. The
+second process can continue to read from the pipe until it reaches the end,
+indicated by EOF.
+
+If the second process exits first, the read end of the pipe will be closed. If
+the first process attempts to write to the broken pipe, it will receive a
+SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
+
+#### Exec and eval
+
+- `exec` - peplace the current shell with the given command
+    - `exec bash`
+    - `exec bc`
+- `eval` - run the arguments as a command in the current shell
+    - `cmd="bar=foo" eval $cmd; echo $bar`
+
+## Process Management
+
+A process is an instance of an executing program.
+
+Processes have:
+
+- Process ID (PID)
+- Real and Effective User and Group IDs (permissions)
+- Current working directory
+- Environment list
+- Allocated memory
+    - Text (instructions)
+    - Data (constants)
+    - Heap (explicitly allocated)
+    - Stack (function calls)
+- Open file descriptors (input/output)
+    - standard:
+        - stdin (0)
+        - stdout (1)
+        - stderr (2)
+    - files
+    - sockets
+    - pipes
+- An exit code
+    - 0 means success
+    - greater than 0 means error
+        
+All processes start from the [init](https://en.wikipedia.org/wiki/Init)
+process, which has PID 1, and is the first process started. Modern linux
+distros often use [systemd](https://en.wikipedia.org/wiki/Systemd).
+
+### Viewing
+
+There are many ways to view information about running processes on your system
+
+- `ps` - processes with same user, associated with same terminal
+- `ps aux` - all running processes
+- `top`/`htop` - all processes, real-time, interactive
+- /proc - [Everything is a File](https://en.wikipedia.org/wiki/Everything_is_a_file)
+    - `sleep 1000 &`
+    - `stat /prod/PID`
+    - `cat /proc/PID/cmdline`
+    - `ll /proc/PID/cwd`
+    - `echo "yo" > /proc/PID/fd/1` :mindblown:
+
+### Running in the background
+
+When starting a process
+
+- `&` at end of command
+- e.g. `sleep 10 && echo "yo" &`
+
+If already in foreground
+
+- `ctrl-z` to pause it (sends `SIGSTP` signal)
+- `bg` to run in background
+- `fg` to bring back into foreground
+
+`jobs` - list background processes started in the current shell
+
+- Note that if you close the terminal, the background jobs will persist,
+  but won't show up in `jobs` anymore
+
+### Signals/killing
+
+To kill a process, send a signal or close the input stream.
+
+Keyboard shortcuts for foreground processes
+
+- `ctrl-c` - SIGINT, requests that a process shutdown
+- `ctrl-d` - End of file (EOF), often stops processes that read from stdin
+
+Commands for background processes
+
+- `kill` - Sends a signal to a process (by PID)
+    - `kill %1` - Send SIGINT to job [1]
+    - `kill -s SIGINT`/`kill -2`
+    - `kill -s SIGKILL`/`kill -9`
+        - https://www.youtube.com/watch?v=Fow7iUaKrq4
+    - `kill -s SIGKILL $$`
+    - `kill $(jobs -p)`
+- `pkill`/`killall` - Sends a signal to a process (by name/pattern)
+    - `pkill sleep`
+    - `killall sleep`
+
+Signals
+
+- `kill -l` - list all signals
+- `man 7 signal` - manual page for signals
+
+## Solving the Puzzle
+
+```bash
+(echo red; echo green 1>&2) | echo blue
+```
+
+Let's actually test the output of the command to see what it prints.
+
+First, let's alter the command so that it prints all of the output on one line:
+
+```bash
+((echo -n red; echo -n green 1>&2) | echo -n blue); echo
+```
+
+Now, let's run that command 1000 times:
+
+```bash
+seq 1000 | xargs -n 1 bash -c "((echo -n red; echo -n green 1>&2) | echo -n blue); echo"
+```
+
+Now let's capture the results, sort them, and count the number of unique lines.
+This is like "GROUP BY" in SQL:
+
+```bash
+seq 1000 | xargs -n 1 bash -c "((echo -n red; echo -n green 1>&2) | echo -n blue) 2>&1; echo" | sort | uniq -c
+```
+
+[Explanation](https://utcc.utoronto.ca/~cks/space/blog/unix/ShellPipelineIndeterminate)
 
 ## Users/Groups
 
@@ -469,162 +683,6 @@ Your current active user can be changed with `sudo`
 - `sudo -s`.
 - `sudo -su postgres`.
 
-## Process Management
-
-A process is an instance of an executing program.
-
-Processes have:
-
-- Process ID (PID)
-- Real and Effective User and Group IDs (permissions)
-- Current working directory
-- Environment list
-- Allocated memory
-    - Text (instructions)
-    - Data (constants)
-    - Heap (explicitly allocated)
-    - Stack (function calls)
-- Open file descriptors (input/output)
-    - standard:
-        - stdin (0)
-        - stdout (1)
-        - stderr (2)
-    - files
-    - sockets
-    - pipes
-- An exit code
-    - 0 means success
-    - greater than 0 means error
-        
-All processes start from the [init](https://en.wikipedia.org/wiki/Init)
-process, which has PID 1, and is the first process started. Modern linux
-distros often use [systemd](https://en.wikipedia.org/wiki/Systemd).
-
-### Viewing processes
-
-There are many ways to view information about running processes on your system
-
-- `ps` - processes with same user, associated with same terminal
-- `ps aux` - all running processes
-- `top`/`htop` - all processes, real-time, interactive
-- /proc - [Everything is a File](https://en.wikipedia.org/wiki/Everything_is_a_file)
-    - `sleep 1000 &`
-    - `stat /prod/PID`
-    - `cat /proc/PID/cmdline`
-    - `ll /proc/PID/cwd`
-    - `echo "yo" > /proc/PID/fd/1` :mindblown:
-
-### Running processes in the background
-
-When starting a process
-
-- `&` at end of command
-- e.g. `sleep 10 && echo "yo" &`
-
-If already in foreground
-
-- `ctrl-z` to pause it (sends `SIGSTP` signal)
-- `bg` to run in background
-- `fg` to bring back into foreground
-
-`jobs` - list background processes started in the current shell
-
-- Note that if you close the terminal, the background jobs will persist,
-  but won't show up in `jobs` anymore
-
-### Signals/killing processes
-
-To kill a process, send a signal or close the input stream.
-
-Keyboard shortcuts for foreground processes
-
-- `ctrl-c` - SIGINT, requests that a process shutdown
-- `ctrl-d` - End of file (EOF), often stops processes that read from stdin
-
-Commands for background processes
-
-- `kill` - Sends a signal to a process (by PID)
-    - `kill %1` - Send SIGINT to job [1]
-    - `kill -s SIGINT`/`kill -2`
-    - `kill -s SIGKILL`/`kill -9`
-        - https://www.youtube.com/watch?v=Fow7iUaKrq4
-    - `kill -s SIGKILL $$`
-    - `kill $(jobs -p)`
-- `pkill`/`killall` - Sends a signal to a process (by name/pattern)
-    - `pkill sleep`
-    - `killall sleep`
-
-Signals
-
-- `kill -l` - list all signals
-- `man 7 signal` - manual page for signals
-
-## Composing Commands
-
-"Make each program do one thing well."
-
-"Expect the output of every program to become the input to another, as yet unknown, program."
-
-[The Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
-
-Subshells
-
-- `()` - Runs the commands inside the parentheses in a separate subshell
-    - `( ps aux | grep bash )`
-
-Combining commands
-
-- `;` - run multiple commands, one after the other
-    - `sleep 10; echo "yo"`
-- `&&` - only run a command if the first command succeeds
-    - `bash -c 'exit 0' && echo "yo"`
-    - `bash -c 'exit 1' && echo "yo"`
-- `||` - only run a command if the first command fails
-    - `bash -c 'exit 0' || echo "yo"`
-    - `bash -c 'exit 1' || echo "yo"`
-- `$()` (or backticks) - "command substitution"
-    - `echo "Today's date is: $(date)"`
-    - ``echo "Today's date is: `date```
-
-Redirection
-
-- `<` - redirect file to stdin
-    - `grep "bash" < README.md` vs `grep "bash" README.md`
-- `>` - redirect stdout to file (truncate it first)
-    - `echo "yo" > out.txt`
-- `>>` - redirect stdout to file (append to it)
-    - `echo "yo" > out.txt && echo "dude" >> out.txt`
-- `2>&1` - redirect stderr to stdin
-- `&>` - redirect both stdout and stderr to a file
-- `<<< ''` - "Herestring" - redirect string literal to stdin
-    - `cat <<< "yo"`
-- `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
-- `<()` - Treat output of command as a file
-    - `grep "bash" <(cat README.md)`
-- /dev/null - a useful black hole
-    - `yes > /dev/null`
-
-Pipes and pipelines
-
-- `|` - use one process's stdout as the next process's stdin
-- `cat README.md | grep "bash"`
-
-Exec and eval
-
-- `exec` - peplace the current shell with the given command
-    - `exec bash`
-    - `exec bc`
-- `eval` - run the arguments as a command in the current shell
-    - `cmd="bar=foo" eval $cmd; echo $bar`
-
-Puzzle
-
-What does this print?
-
-`(echo red; echo green 1>&2) | echo blue`
-
-[Explanation](https://utcc.utoronto.ca/~cks/space/blog/unix/ShellPipelineIndeterminate)
-
 ## Scripting
 
 Any commands entered at the terminal can also be written into a bash script,
@@ -664,24 +722,36 @@ program on your computer:
 
 `example`
 
-### Sourcing
+### Environment Variables
 
-Normally, when you run a bash script, it is executed in a separate subshell.
-However, "sourcing" a file refers to the process of running the commands in a
-file within the current shell. This is how files like `.bashrc` and
-`.bash_profile` are run at the start of a session. Files can be sourced with
-either the `source` command or the `.` directive.
+In bash scripts, variables are one of the primary means of inputting arguments.
 
-- `source ~/.bashrc`
-- `. ~/.bashrc` 
-
-Sourcing a file makes it possible for shell-specific configuration to take
-effect - for example, `export` and `alias` commands.
-
-Some files are sourced automatically at the start of a shell session:
-
-- `.bashrc` - sourced at start of interactive non-login shells
-- `.profile`/`.bash_profile` - sourced at start of login shells
+- `$VAR`
+- `${VAR}`
+- Single vs double quotes
+    - `VAR=yo; echo "$VAR"`
+    - `VAR=yo; echo '$VAR'`
+- `${VAR:-default}` - Use "default" as the default value, if the variable
+  is not set
+- `${VAR:=default}` - If variable is not set, set it to "default"
+- `${VAR:+alt}` - If variable is set, use "alt" instead
+- `${VAR:?err}` - If parameter is set, use it. Otherwise print "err" and
+  abort with exit code 1.
+- `${#VAR}` - Length of the string contained in the variable
+- `${VAR#pattern}` - Remove shortest instance of "pattern" from beginning
+  of variable
+- `${VAR##pattern}` - Remove longest instance of "pattern" from beginning
+  of variable
+- `${VAR%pattern}` - Remove shortest instance of "pattern" from end of
+  variable
+- `${VAR%%pattern}` - Remove longest instance of "pattern" from end of
+  variable
+- `${VAR:pos}` - Variable starting from offset pos
+- `${VAR:pos:len}` - Variable starting from offset pos with length len
+- `${VAR/find/replace}` - Replace the first instance of "find" with
+  "replace"
+- `${VAR//find/replace}` - Replace all instances of "find" with "replace"
+- `${!VAR}` - Indirect reference to 
 
 ## Appendix: Useful Commands
 
