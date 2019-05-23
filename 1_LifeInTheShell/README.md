@@ -563,7 +563,7 @@ For more information, see `man 7 glob`
     END
     ```
 
-- /dev/null - a useful black hole
+- `/dev/null` - a useful black hole
 
     ```bash
     yes > /dev/null
@@ -579,17 +579,8 @@ Interprocess communication mechanism.
 
     ```bash
     fortune | cowsay
-    ```
-
-    ```bash
     cat README.md | grep "bash"
-    ```
-
-    ```bash
     git blame | grep "Nathaniel J Cochran" | wc -l
-    ```
-
-    ```bash
     git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
     ```
 
@@ -609,12 +600,9 @@ SIGPIPE signal, indicating a broken pipe. This kills the process, by default.
 #### Exec and eval
 
 - `exec` - peplace the current shell with the given command
-    ```bash
 
+    ```bash
     exec bash
-    ```
-
-    ```bash
     exec bc
     ```
 
@@ -666,18 +654,9 @@ There are many ways to view information about running processes on your system
 
     ```bash
     sleep 1000 &
-    ```
-
-    ```bash
-    stat /prod/PID
-    ```
-
-    ```bash
-    cat /proc/PID/cmdline
-    ```
-
-    ```bash
-    ll /proc/PID/cwd
+    stat /proc/$!
+    cat /proc/$!/cmdline
+    ll /proc/$!/cwd
     ```
 
     ```bash
