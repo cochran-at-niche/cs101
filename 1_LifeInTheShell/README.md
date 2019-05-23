@@ -125,7 +125,8 @@ ps aux | grep "bash\|term"
 
 ### REPL (Read Evaluate Print Loop)
 
-A shell is a special kind of program called a "Read Evaluate Print Loop".
+A shell is a special kind of program called a [Read Evaluate Print
+Loop](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop).
 
 We could code a simple REPL ourselves without much difficulty.
 
