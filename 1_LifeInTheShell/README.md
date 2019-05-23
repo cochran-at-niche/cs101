@@ -251,8 +251,9 @@ Setting Variables
 
 In a shell, you are always located within a particular directory in the
 file system (the "current working directory"). You start within your user's
-`$HOME` directory (`~`). Most system files are located somewhere in the root
-directory (`/`). See: https://www.tldp.org/LDP/Linux-Filesystem-Hierarchy/html/c23.html
+`$HOME` directory (`~`). Most system files are located somewhere in the [root
+directory](https://www.freedesktop.org/software/systemd/man/file-hierarchy.html)
+(`/`). 
 
 ![Directory Structure](directories.png)
 
