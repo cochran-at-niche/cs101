@@ -49,7 +49,7 @@ The goals of this lesson are:
   - [Pipes and pipelines](#pipes-and-pipelines)
   - [Exec and eval](#exec-and-eval)
 - [Solving the Puzzle](#solving-the-puzzle)
-- [Users/Groups](#usersgroups)
+- [Appendix: Users/Groups](#appendix-usersgroups)
   - [Permissions](#permissions)
 - [Appendix: Scripting](#appendix-scripting)
   - [Shebang](#shebang)
@@ -748,7 +748,7 @@ seq 1000 | xargs -n 1 bash -c "( ( /bin/echo -n red; /bin/echo -n green 1>&2 ) |
 
 [Explanation](https://utcc.utoronto.ca/~cks/space/blog/unix/ShellPipelineIndeterminate)
 
-## Users/Groups
+## Appendix: Users/Groups
 
 In a shell, you are always logged in as a particular user.
 
