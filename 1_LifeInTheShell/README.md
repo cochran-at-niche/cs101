@@ -168,9 +168,7 @@ Fundamentally, a program is set of instructions
 - Interpreted
     - Human readable scripts
     - Input to other programs
-        -   ```
-            bash -c "echo yo"
-            ```
+        - `bash -c "echo yo"`
         - `python my_script.py`
         - `node index.js`
     - Shebang (`#!/bin/bash`)
@@ -483,14 +481,33 @@ For more information, see `man 7 glob`
 - `;` - run multiple commands, one after the other
     - `sleep 10; echo "yo"`
 - `&&` - only run a command if the first command succeeds
-    - `bash -c 'exit 0' && echo "yo"`
-    - `bash -c 'exit 1' && echo "yo"`
+
+      ```bash
+      bash -c 'exit 0' && echo "yo"
+      ```
+
+      ```bash
+      bash -c 'exit 1' && echo "yo"
+      ```
 - `||` - only run a command if the first command fails
-    - `bash -c 'exit 0' || echo "yo"`
-    - `bash -c 'exit 1' || echo "yo"`
+
+      ```bash
+      bash -c 'exit 0' || echo "yo"
+      ```
+
+      ```bash
+      bash -c 'exit 1' || echo "yo"
+      ```
+
 - `$()` (or backticks) - "command substitution"
-    - `echo "Today's date is: $(date)"`
-    - ``echo "Today's date is: `date```
+
+      ```bash
+      echo "Today's date is: $(date)"
+      ```
+
+      ```bash
+      echo "Today's date is: `date`
+      ```
 
 #### Redirection
 
