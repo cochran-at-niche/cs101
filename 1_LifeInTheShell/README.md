@@ -168,7 +168,9 @@ Fundamentally, a program is set of instructions
 - Interpreted
     - Human readable scripts
     - Input to other programs
-        - `bash -c "echo yo"`
+        -   ```
+            bash -c "echo yo"
+            ```
         - `python my_script.py`
         - `node index.js`
     - Shebang (`#!/bin/bash`)
