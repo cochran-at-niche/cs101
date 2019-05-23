@@ -2,7 +2,7 @@
 
 ```
                __
-    .,-;-;-,. /'_\ I love my shell
+    .,-;-;-,. /'_\
   _/_/_/_|_\_\) /
 '-<_><_><_><_>=/\
   `/_/====/_/-'\_\
@@ -72,6 +72,7 @@ What does this print?
 services." - [Wikipedia](https://en.wikipedia.org/wiki/Shell_(computing))
 
 "Shell" because it's the outermost layer around the operating system kernel.
+Actually a user space process.
 
 Operating system services:
 
@@ -98,8 +99,8 @@ A terminal **emulator** is a software program that emulates an old hardware
 terminal, much like a gameboy emulator emulates a physical gameboy.
 
 A terminal is often referred to as a "tty", which is derived from the word
-"teletype". A terminal emulator is often referred to as "pts", which means
-"pseudo-terminal"
+"teletype". A terminal emulator is often referred to as a "pty"/"pts", which
+means "pseudo-terminal".
 
 A shell is an interactive program whose input/output is typically
 provided/displayed via a terminal.
@@ -209,11 +210,50 @@ Some files are sourced automatically at the start of a shell session:
 - `.bashrc` - sourced at start of interactive non-login shells
 - `.profile`/`.bash_profile` - sourced at start of login shells
 
+### Environment Variables
+
+Environment variables are parameters that can affect the behavior of programs.
+Use the `env`/`printenv` commands to view a list of all currently set
+environment variables.
+
+Built-in Variables
+
+- `$HOME`
+- `$PWD`
+- `$OLDPWD`
+- `$USER`
+- `$PATH`
+- `$CDPATH`
+- `$TERM`
+- `$SHELL`
+- `$DISPLAY`
+- `$LANG`
+- `$LANGUAGE`
+- `$RANDOM`
+- `$SECONDS`
+- `$LINENO`
+- etc.
+
+Setting Variables
+
+- Local
+    - Not available to subshells and child processes
+    - `VAR=whatever; echo $VAR`
+- Inline
+    - Only available for the current command
+    - `VAR=whatever bash -c 'echo "$VAR"'`
+- Exported
+    - Available for all subsequent commands/child processes
+    - Often in .bashrc or other sourced file
+    - `export VAR=whatever`
+
 ### Navigation
 
 In a shell, you are always located within a particular directory in the
-filesystem (the "current working directory"). You start within your user's
+file system (the "current working directory"). You start within your user's
 `$HOME` directory (`~`).
+
+![Directory Structure](directories.png)
 
 - `pwd` - print working directory
 - `ls` - list files in directory
@@ -338,7 +378,8 @@ you can use "vi" editing mode by setting the following option in your .bashrc:
 
 `set -o vi`
 
-Use `bind -P` to see a list of your current key bindings.
+Use `bind -P` to see a list of your current key bindings. `man readline`
+explains the syntax.
 
 ## Commands
 
@@ -348,12 +389,12 @@ A shell command has the following parts:
     - Searches for it in `$PATH`
     - Use `which` to see which program will be called
 - Arguments - technically, everything that comes after the command name
+    - First argument (e.g. arg 0) is always the program name itself
     - Options - e.g. `docker-compose -f docker-compose.backend.yml`
     - Flags - e.g. `ls -R`
     - Other arguments (often just referred to as "arguments")
 - Environment variables
     - `VAR=whatever bash -c 'echo $VAR'`
-- stdin, stdout, stderr
 
 ### Usage
 
@@ -373,7 +414,7 @@ Usage: program [-aDde] [-f | -g] [-n number] [-b b_arg | -c c_arg] req1 req2 [op
 
 ### Help
 
-You can get help for most commands right in your terminal
+You can get help for almost any command right in your terminal
 
 - `help` - Bash help
 - `--help` - Command-specific help
@@ -397,49 +438,23 @@ You can get help for most commands right in your terminal
 - `whatis` - brief description of command
 - `firefox www.google.com`
 
-### Environment Variables
-
-Environment variables are parameters that can affect the behavior of programs.
-Use the `env`/`printenv` commands to view a list of all currently set
-environment variables.
-
-Built-in Variables
-
-- `$HOME`
-- `$PWD`
-- `$OLDPWD`
-- `$USER`
-- `$PATH`
-- `$CDPATH`
-- `$TERM`
-- `$SHELL`
-- `$DISPLAY`
-- `$LANG`
-- `$LANGUAGE`
-- `$RANDOM`
-- `$SECONDS`
-- `$LINENO`
-
-Setting Variables
-
-- Inline
-    - Only available for the current command
-    - `VAR=whatever bash -c 'echo "$VAR"'`
-- Exported
-    - Available for all subsequent commands/subshells
-    - Often in .bashrc or other sourced file
-    - `export VAR=whatever`
-
 ### File Globbing
 
 File "globbing" is a built-in mechanism for expanding file path wildcard
 patterns. It is often confused with regular expressions, but it is technically
 a different thing.
 
+Globs are expanded by the shell **before** being passed to the command as
+arguments.
+
+```bash
+echo *
+```
+
 The rules are
 
 - `?` - matches any single character
-- `\*` - matches any string, including the empty string
+- `*` - matches any string, including the empty string
 - `[abc]` - matches any of the characters contained within the brackets
 - `[!abc]` - matches any character not contained within the brackets
 - `[a-c]` - matches any character in the range from a to c
@@ -475,6 +490,8 @@ For more information, see `man 7 glob`
 
 #### Redirection
 
+![Standard Steams](std.png)
+
 - `<` - redirect file to stdin
     - `grep "bash" < README.md`
     - Alternatively, many commands take input filenames as arguments: `grep "bash" README.md`
@@ -496,10 +513,15 @@ For more information, see `man 7 glob`
 
 #### Pipes and pipelines
 
+![Pipeline](pipeline.png)
+
 Interprocess communication mechanism.
 
 - `|` - use one process's stdout as the next process's stdin
+- `fortune | cowsay`
 - `cat README.md | grep "bash"`
+- `git blame | grep "Nathaniel J Cochran" | wc -l`
+- `git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n`
 
 Both process are started in parallel. The first process writes to a buffer,
 and the second process reads from it.
@@ -538,7 +560,7 @@ Processes have:
     - Heap (explicitly allocated)
     - Stack (function calls)
 - Open file descriptors (input/output)
-    - standard:
+    - [Standard](https://en.wikipedia.org/wiki/Standard_streams)
         - stdin (0)
         - stdout (1)
         - stderr (2)
@@ -615,7 +637,7 @@ Signals
 ## Solving the Puzzle
 
 ```bash
-(echo red; echo green 1>&2) | echo blue
+( echo red; echo green 1>&2 ) | echo blue
 ```
 
 Let's actually test the output of the command to see what it prints.
@@ -623,20 +645,27 @@ Let's actually test the output of the command to see what it prints.
 First, let's alter the command so that it prints all of the output on one line:
 
 ```bash
-((echo -n red; echo -n green 1>&2) | echo -n blue); echo
+(( echo -n red; echo -n green 1>&2 ) | echo -n blue ); echo
 ```
 
 Now, let's run that command 1000 times:
 
 ```bash
-seq 1000 | xargs -n 1 bash -c "((echo -n red; echo -n green 1>&2) | echo -n blue); echo"
+seq 1000 | xargs -n 1 bash -c "(( echo -n red; echo -n green 1>&2 ) | echo -n blue ); echo"
 ```
 
 Now let's capture the results, sort them, and count the number of unique lines.
 This is like "GROUP BY" in SQL:
 
 ```bash
-seq 1000 | xargs -n 1 bash -c "((echo -n red; echo -n green 1>&2) | echo -n blue) 2>&1; echo" | sort | uniq -c
+seq 1000 | xargs -n 1 bash -c "(( echo -n red; echo -n green 1>&2 ) | echo -n blue ) 2>&1; echo" | sort | uniq -c
+```
+
+What happens if we use the echo program on our computer, instead of the shell
+built-in?
+
+```bash
+seq 1000 | xargs -n 1 bash -c "(( /bin/echo -n red; /bin/echo -n green 1>&2 ) | /bin/echo -n blue ) 2>&1; echo" | sort | uniq -c
 ```
 
 [Explanation](https://utcc.utoronto.ca/~cks/space/blog/unix/ShellPipelineIndeterminate)
@@ -683,7 +712,7 @@ Your current active user can be changed with `sudo`
 - `sudo -s`.
 - `sudo -su postgres`.
 
-## Scripting
+## Appendix: Scripting
 
 Any commands entered at the terminal can also be written into a bash script,
 which is basically a reusable series of commands. To run a script, pass the
@@ -724,10 +753,20 @@ program on your computer:
 
 ### Environment Variables
 
-In bash scripts, variables are one of the primary means of inputting arguments.
+In bash scripts, variables are one of the primary means of providing arguments.
+
+By default, the arguments given to a bash script can be accessed in the script
+via position arguments:
+
+- `$0`, `$1`, `$2`, etc.
+- `$*` - all parameters, starting with parameter 1, as one string
+- `$@` - all parameters, starting with parameter 2, as separate strings
+
+Furthermore, a variety of advanced environment variable syntax is available for
+manipulating variables.
 
 - `$VAR`
-- `${VAR}`
+- `${VAR}` - Same as `$VAR`, but less ambiguous is some cases
 - Single vs double quotes
     - `VAR=yo; echo "$VAR"`
     - `VAR=yo; echo '$VAR'`
@@ -751,7 +790,7 @@ In bash scripts, variables are one of the primary means of inputting arguments.
 - `${VAR/find/replace}` - Replace the first instance of "find" with
   "replace"
 - `${VAR//find/replace}` - Replace all instances of "find" with "replace"
-- `${!VAR}` - Indirect reference to 
+- `${!VAR}` - Indirect reference to another variable
 
 ## Appendix: Useful Commands
 
@@ -804,6 +843,7 @@ Text Processing
 - `diff`
 - `cmp`
 - `wc`
+- `jq`
 
 Process Management
 
@@ -842,6 +882,7 @@ Miscellaneous
 - `write`/`wall`
 - `alias`
 - `cron`/`crontab`
+- `inotifywait`
 - `notify-send`
 - `date`
 - `cal`
