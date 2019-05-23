@@ -645,27 +645,27 @@ Let's actually test the output of the command to see what it prints.
 First, let's alter the command so that it prints all of the output on one line:
 
 ```bash
-(( echo -n red; echo -n green 1>&2 ) | echo -n blue ); echo
+( ( echo -n red; echo -n green 1>&2 ) | echo -n blue ); echo
 ```
 
 Now, let's run that command 1000 times:
 
 ```bash
-seq 1000 | xargs -n 1 bash -c "(( echo -n red; echo -n green 1>&2 ) | echo -n blue ); echo"
+seq 1000 | xargs -n 1 bash -c "( ( echo -n red; echo -n green 1>&2 ) | echo -n blue ); echo"
 ```
 
 Now let's capture the results, sort them, and count the number of unique lines.
 This is like "GROUP BY" in SQL:
 
 ```bash
-seq 1000 | xargs -n 1 bash -c "(( echo -n red; echo -n green 1>&2 ) | echo -n blue ) 2>&1; echo" | sort | uniq -c
+seq 1000 | xargs -n 1 bash -c "( ( echo -n red; echo -n green 1>&2 ) | echo -n blue ) 2>&1; echo" | sort | uniq -c
 ```
 
 What happens if we use the echo program on our computer, instead of the shell
 built-in?
 
 ```bash
-seq 1000 | xargs -n 1 bash -c "(( /bin/echo -n red; /bin/echo -n green 1>&2 ) | /bin/echo -n blue ) 2>&1; echo" | sort | uniq -c
+seq 1000 | xargs -n 1 bash -c "( ( /bin/echo -n red; /bin/echo -n green 1>&2 ) | /bin/echo -n blue ) 2>&1; echo" | sort | uniq -c
 ```
 
 [Explanation](https://utcc.utoronto.ca/~cks/space/blog/unix/ShellPipelineIndeterminate)
