@@ -479,29 +479,29 @@ For more information, see `man 7 glob`
 #### Combinations
 
 - `;` - run multiple commands, one after the other
+
     ```bash
     sleep 10; echo "yo"
     ```
+
 - `&&` - only run a command if the first command succeeds
+
     ```bash
     bash -c 'exit 0' && echo "yo"
-    ```
-    ```bash
     bash -c 'exit 1' && echo "yo"
     ```
+
 - `||` - only run a command if the first command fails
+
     ```bash
     bash -c 'exit 0' || echo "yo"
-    ```
-    ```bash
     bash -c 'exit 1' || echo "yo"
     ```
 
 - `$()` (or backticks) - "command substitution"
+
     ```bash
     echo "Today's date is: $(date)"
-    ```
-    ```bash
     echo "Today's date is: `date`
     ```
 
@@ -554,6 +554,15 @@ For more information, see `man 7 glob`
     ```
 
 - `<< END ...\n END` - "Heredoc" - redirect input stream literal to stdin
+
+    ```bash
+    cat << END
+    yooo
+    yoo
+    yo
+    END
+    ```
+
 - /dev/null - a useful black hole
 
     ```bash
