@@ -701,6 +701,7 @@ echo '[{"key":"value1"}, {"key":"value2"}]' | jq .[].key
 curl https://cat-fact.herokuapp.com/facts | jq ".all | .[] | .text"
 git blame | grep "Nathaniel J Cochran" | wc -l
 git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -n
+( echo red; echo green 1>&2 ) | echo blue
 ```
 
 ### Exec and eval
