@@ -504,7 +504,7 @@ Interprocess communication mechanism.
 Both process are started in parallel. The first process writes to a buffer,
 and the second process reads from it.
 
-![pipe.png]
+![Pipe](pipe.png)
 
 If the first process exits, the write end of the pipe will be closed. The
 second process can continue to read from the pipe until it reaches the end,
