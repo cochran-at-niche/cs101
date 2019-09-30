@@ -35,4 +35,5 @@ you get stuck or need help!
 
 Implement the bag ADT using only [arrays](https://gobyexample.com/arrays) - no
 [slices](https://gobyexample.com/slices), [maps](https://gobyexample.com/maps),
-or other data structures!
+or other data structures! Your bag should be able to grow indefinitely as more
+items are added (i.e. there should not be a size limit).
