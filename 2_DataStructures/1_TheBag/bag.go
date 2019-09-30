@@ -6,8 +6,7 @@ package bag
 type Bag struct {
 	// TODO: Add fields here for storing items. You can use any data structure
 	// you want (there is no "right" answer). The fields you add here will be
-	// accessible in the functions below as "b.field", where "field" is the
-	// name of the field.
+	// accessible in the methods below. See: https://gobyexample.com/methods
 }
 
 // NewBag is used to create an instance of a Bag.
