@@ -29,31 +29,55 @@ struct dynamic_array * new_dynamic_array() {
 // enough to hold the new item, the array will need to be resized so that it
 // can (typically, this is done by doubling the current capacity.
 void add(struct dynamic_array *a, int i) {
-    // TODO: Implement the add method. Resize the underlying array if necessary
-    // by allocating a new array, copying all of the items over to it, and
-    // freeing the memory associated with the current array.
+    // Resize array if necessary
+    if (a->size == a->capacity) {
+        int* array2 = (int*) malloc(sizeof(int) * a->capacity*2);
+        for (int j=0; j < a->size; j++) {
+            array2[j] = a->array[j];
+        }
+        free(a->array);
+        a->array = array2;
+        a->capacity = a->capacity*2;
+    }
+
+    // Add item to end of array and increment the size
+    a->array[a->size] = i;
+    a->size++;
 }
 
 // Remove takes an item out of the dynamic array, if it exists. If there are
 // duplicate items in the dynamic array, it should only remove one of them. If
 // the item does not exist in the dynamic array, it should silently do nothing.
 void remove(struct dynamic_array *a, int i) {
-    // TODO: Implement the remove method
+    // Iterate through array to find item to remove
+    for (int j=0; j < a->size; j++) {
+        if (a->array[j] == i) {
+            // To remove the item, we move all elements after it back one spot,
+            // then decrement the size of the array
+            for (int k=j; k+1 < a->size; k++) {
+                a->array[k] = a->array[k+1];
+            }
+            a->size--;
+            return;
+        }
+    }
 }
 
 // Contains returns true if the given item exists in the dynamic array, and
 // false otherwise.
 bool contains(struct dynamic_array *a, int i) {
-    // TODO: Implement the contains method
+    for (int j=0; j < a->size; j++) {
+        if (a->array[j] == i) {
+            return true;
+        }
+    }
 
     return false;
 }
 
 // Size returns the number of items currently in the dynamic array.
 int size(struct dynamic_array *a) {
-    // TODO: Implement the size method
-
-    return 0;
+    return a->size;
 }
 
 // Frees the memory allocated for the dynamic array (both the underlying array,
