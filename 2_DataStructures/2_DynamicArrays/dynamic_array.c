@@ -38,7 +38,8 @@ void add(struct dynamic_array *a, int i) {
 // duplicate items in the dynamic array, it should only remove one of them. If
 // the item does not exist in the dynamic array, it should silently do nothing.
 void remove(struct dynamic_array *a, int i) {
-    // TODO: Implement the remove method
+    // TODO: Implement the remove method. Removing an item will require you to
+    // move all items after it back one spot in the array.
 }
 
 // contains returns true if the given item exists in the dynamic array, and
