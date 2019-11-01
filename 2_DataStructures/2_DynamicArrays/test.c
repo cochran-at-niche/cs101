@@ -128,7 +128,7 @@ void test_dyn_arr_remove_many() {
     }
 
     for (int i=0; i<100; i++) {
-        if (!dyn_arr_contains(a, i)) {
+        if (dyn_arr_contains(a, i)) {
             printf("Expected dynamic array to not contain %d after calling dyn_arr_add(%d) and dyn_arr_remove(%d)\n", i, i, i);
         }
     }
