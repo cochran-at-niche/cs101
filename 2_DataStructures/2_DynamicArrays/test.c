@@ -90,6 +90,100 @@ void test_dyn_arr_remove() {
     }
 }
 
+void test_dyn_arr_remove_multiple() {
+    printf("\ntest_dyn_arr_remove_multiple)\n");
+    dyn_arr *a = new_dyn_arr();
+    dyn_arr_add(a, 1);
+    dyn_arr_add(a, 2);
+
+    dyn_arr_remove(a, 1);
+    if (dyn_arr_contains(a, 1)) {
+        printf("Expected dynamic array to not contain 1 after calling dyn_arr_add(1), dyn_arr_add(2), and dyn_arr_remove(1)\n");
+    }
+
+    if (dyn_arr_size(a) != 1) {
+		printf("Expected dynamic array to have a dyn_arr_size of 1 after calling dyn_arr_add(1), dyn_arr_add(2), and dyn_arr_remove(1)\n");
+    }
+
+    dyn_arr_remove(a, 2);
+    if (dyn_arr_contains(a, 2)) {
+        printf("Expected dynamic array to not contain 1 after calling dyn_arr_add(1), dyn_arr_add(2), dyn_arr_remove(1), and dyn_arr_remove(2)\n");
+    }
+
+    if (dyn_arr_size(a) != 0) {
+		printf("Expected dynamic array to have a dyn_arr_size of 1 after calling dyn_arr_add(1), dyn_arr_add(2), dyn_arr_remove(1), and dyn_arr_remove(2)\n");
+    }
+}
+
+void test_dyn_arr_remove_many() {
+    printf("\ntest_dyn_arr_remove_many\n");
+    dyn_arr *a = new_dyn_arr();
+
+    for (int i=0; i<100; i++) {
+        dyn_arr_add(a, i);
+    }
+
+    for (int i=0; i<100; i++) {
+        dyn_arr_remove(a, i);
+    }
+
+    for (int i=0; i<100; i++) {
+        if (!dyn_arr_contains(a, i)) {
+            printf("Expected dynamic array to not contain %d after calling dyn_arr_add(%d) and dyn_arr_remove(%d)\n", i, i, i);
+        }
+    }
+
+    if (dyn_arr_size(a) != 0) {
+		printf("Expected dynamic array to have a dyn_arr_size of 0 after calling dyn_arr_add and dyn_arr_remove 100 times\n");
+    }
+}
+
+void test_dyn_arr_remove_non_existent() {
+    printf("\ntest_dyn_arr_remove_non_existent\n");
+    dyn_arr *a = new_dyn_arr();
+
+    dyn_arr_remove(a, 1);
+
+    if (dyn_arr_contains(a, 1)) {
+        printf("Expected dynamic array to not contain 1 after calling dyn_arr_remove(1) on an empty dynamic array\n");
+    }
+
+    dyn_arr_add(a, 1);
+    dyn_arr_remove(a, 2);
+    if (dyn_arr_contains(a, 2)) {
+        printf("Expected dynamic array to not contain 2 after calling dyn_arr_remove(1), dyn_arr_add(1), and dyn_arr_remove(2) on an empty dynamic array\n");
+    }
+
+    if (dyn_arr_size(a) != 1) {
+		printf("Expected dynamic array to have a dyn_arr_size of 1 after calling dyn_arr_remove(1), dyn_arr_add(1), and dyn_arr_remove(2) on an empty dynamic array\n");
+    }
+}
+
+void test_dyn_arr_remove_duplicates() {
+    printf("\ntest_dyn_arr_remove_duplicates\n");
+    dyn_arr *a = new_dyn_arr();
+    dyn_arr_add(a, 1);
+    dyn_arr_add(a, 1);
+
+    dyn_arr_remove(a, 1);
+    if (!dyn_arr_contains(a, 1)) {
+        printf("Expected dynamic array to contain 1 after calling dyn_arr_add(1) twice and dyn_arr_remove(1) once\n");
+    }
+
+    if (dyn_arr_size(a) != 1) {
+		printf("Expected dynamic array to have a dyn_arr_size of 1 after calling dyn_arr_add(1) twice and dyn_arr_remove(1) once\n");
+    }
+
+    dyn_arr_remove(a, 1);
+    if (dyn_arr_contains(a, 1)) {
+        printf("Expected dynamic array to not contain 1 after calling dyn_arr_add(1) twice and dyn_arr_remove(1) twice\n");
+    }
+
+    if (dyn_arr_size(a) != 0) {
+		printf("Expected dynamic array to have a dyn_arr_size of 0 after calling dyn_arr_add(1) twice and dyn_arr_remove(1) twice\n");
+    }
+}
+
 int main() {
     test_new_dyn_arr();
     test_dyn_arr_add();
@@ -97,5 +191,9 @@ int main() {
     test_dyn_arr_add_multiple();
     test_dyn_arr_add_duplicates();
     test_dyn_arr_remove();
+    test_dyn_arr_remove_multiple();
+    test_dyn_arr_remove_many();
+    test_dyn_arr_remove_non_existent();
+    test_dyn_arr_remove_duplicates();
 }
 
