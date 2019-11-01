@@ -3,8 +3,8 @@
 int main() {
     test_new_dyn_arr();
     test_dyn_arr_add();
-    test_dyn_arr_add_many();
     test_dyn_arr_add_multiple();
+    test_dyn_arr_add_many();
     test_dyn_arr_add_duplicates();
     test_dyn_arr_remove();
     test_dyn_arr_remove_multiple();
@@ -63,6 +63,7 @@ void test_dyn_arr_add_many() {
     for (int i=0; i<100; i++) {
         if (!dyn_arr_contains(a, i)) {
             printf("Expected dynamic array to contain %d after calling dyn_arr_add(%d)\n", i, i);
+            break;
         }
     }
 
@@ -141,6 +142,7 @@ void test_dyn_arr_remove_many() {
     for (int i=0; i<100; i++) {
         if (dyn_arr_contains(a, i)) {
             printf("Expected dynamic array to not contain %d after calling dyn_arr_add(%d) and dyn_arr_remove(%d)\n", i, i, i);
+            break;
         }
     }
 
