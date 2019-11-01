@@ -1,6 +1,17 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "dynamic_array.h"
+#include "test.h"
+
+int main() {
+    test_new_dyn_arr();
+    test_dyn_arr_add();
+    test_dyn_arr_add_many();
+    test_dyn_arr_add_multiple();
+    test_dyn_arr_add_duplicates();
+    test_dyn_arr_remove();
+    test_dyn_arr_remove_multiple();
+    test_dyn_arr_remove_many();
+    test_dyn_arr_remove_non_existent();
+    test_dyn_arr_remove_duplicates();
+}
 
 void test_new_dyn_arr() {
     printf("\ntest_new_dyn_arr\n");
@@ -183,17 +194,3 @@ void test_dyn_arr_remove_duplicates() {
 		printf("Expected dynamic array to have a dyn_arr_size of 0 after calling dyn_arr_add(1) twice and dyn_arr_remove(1) twice\n");
     }
 }
-
-int main() {
-    test_new_dyn_arr();
-    test_dyn_arr_add();
-    test_dyn_arr_add_many();
-    test_dyn_arr_add_multiple();
-    test_dyn_arr_add_duplicates();
-    test_dyn_arr_remove();
-    test_dyn_arr_remove_multiple();
-    test_dyn_arr_remove_many();
-    test_dyn_arr_remove_non_existent();
-    test_dyn_arr_remove_duplicates();
-}
-
