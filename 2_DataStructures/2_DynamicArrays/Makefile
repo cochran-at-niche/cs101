@@ -1,11 +1,11 @@
 
-all: test
+all: dynamic_array
 
-build: dynamic_array.h dynamic_array.c test.c
+dynamic_array:
 	gcc -Wall -o $@ dynamic_array.c test.c
 
-test: build
-	./test
+test: dynamic_array
+	./dynamic_array
 
 clean:
 	rm dynamic_array
