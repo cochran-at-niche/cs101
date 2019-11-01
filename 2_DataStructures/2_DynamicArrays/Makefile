@@ -1,8 +1,9 @@
 
 all: dynamic_array
 
-dynamic_array: main.c dynamic_array.c
-	gcc -Wall -o $@ main.c dynamic_array.c
+test: dynamic_array.h dynamic_array.c test.c
+	gcc -Wall -o $@ dynamic_array.c test.c
+	./test
 
 clean:
 	rm dynamic_array
