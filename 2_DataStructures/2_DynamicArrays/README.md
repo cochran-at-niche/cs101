@@ -1,0 +1,46 @@
+# Dynamic Arrays
+
+The goal of this assignment is to gain an understanding of how memory is
+allocated, the limitations that imposes on us, and how we can cope with it by
+creating data structures that abstract the details of manual memory management
+away. By understanding the kinds of trade-offs we have to deal with when
+thinking about memory layout and allocation, we set the stage for understanding
+more sophisticated data types, such as linked lists and binary trees.
+
+This also serves as a (hopefully) gentle introduction to the C programming
+language, which we will be our main programming language for this data
+structures course going forward.
+
+## Instructions
+
+Your task is to implement a [dynamic
+array](https://en.wikipedia.org/wiki/Dynamic_array). I have provided the
+skeleton in `dynamic_array.c`. A standard array in C has a fixed size which is
+allocated when it is created, which limits the number of items that can be
+stored in it. A dynamic array is an array data structure capable of
+automatically resizing itself to accommodate more items. In order to do so, it
+must keep track of its size (the current number of items in the array) as well
+as its capacity (the maximum number of items that can be stored in the array,
+given the amount of memory current allocated to it). When the size of the array
+reaches the capacity, the array needs to be resized to hold more items. This is
+typically done by allocated memory for a new array twice as large, copying all
+the items over to it, and freeing the memory allocated for the original array.
+
+Our dynamic array has methods for adding items, removing items, and
+checking whether an item exists in the array. In other words, it implements the
+"bag" ADT from the previous lesson. Just like in the previous lesson, the items
+we are storing are just integers.
+
+1. [Install docker](https://docs.docker.com/install/)
+2. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git),
+   if you haven't already.
+3. Clone (or fork and clone) this repo: `git clone https://github.com/cochran-at-niche/cs101`
+4. Navigate to this directory: `cd cs101/2_DataStructures/2_DynamicArrays`
+5. Run `make docker-test` (if you have gcc installed and would rather build/run
+   the tests locally, run `make test` instead). *You should see a bunch of
+   failing tests*.
+6. Open the `dynamic_array.c` file. Implement the necessary code for each of the
+   `TODO` comments.
+7. Repeat steps 5-6 until all tests are passing.
+
+Note: If you are curious about the tests themselves, they are in `test.c`.
