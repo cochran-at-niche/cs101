@@ -44,3 +44,11 @@ we are storing are just integers.
 7. Repeat steps 5-6 until all tests are passing.
 
 Note: If you are curious about the tests themselves, they are in `test.c`.
+
+## Further Reading
+
+* Read about how Go slices are implemented (spoiler: they are essentially
+  dynamic arrays): https://blog.golang.org/go-slices-usage-and-internals
+* Run this program to see how the length and capacity of a Go slice change as
+  items are added to it (this should look very familiar!):
+  https://play.golang.org/p/JCFJGVJh0Gv
