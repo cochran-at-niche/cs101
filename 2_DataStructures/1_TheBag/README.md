@@ -32,10 +32,3 @@ pass. There is not a single "right" answer. Definitely feel free to ask for
 advice if you get stuck or need help!
 
 Note: If you are curious about the tests themselves, they are in `bag_test.go`.
-
-### Bonus Points
-
-Implement the bag ADT using only [arrays](https://gobyexample.com/arrays) - no
-[slices](https://gobyexample.com/slices), [maps](https://gobyexample.com/maps),
-or other data structures! Your bag should be able to grow indefinitely as more
-items are added (i.e. there should not be a size limit).
