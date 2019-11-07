@@ -11,7 +11,7 @@ This also serves as a (hopefully) gentle introduction to the C programming
 language, which we will be our main programming language for this data
 structures course going forward.
 
-## Instructions
+## Assignment
 
 Your task is to implement a [dynamic
 array](https://en.wikipedia.org/wiki/Dynamic_array). I have provided the
@@ -31,17 +31,22 @@ checking whether an item exists in the array. In other words, it implements the
 "bag" ADT from the previous lesson. Just like in the previous lesson, the items
 we are storing are just integers.
 
+### Prerequisites
+
 1. [Install docker](https://docs.docker.com/install/)
-2. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git),
-   if you haven't already.
+2. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 3. Clone (or fork and clone) this repo: `git clone https://github.com/cochran-at-niche/cs101`
-4. Navigate to this directory: `cd cs101/2_DataStructures/2_DynamicArrays`
-5. Run `make docker-test` (if you have gcc installed and would rather build/run
+4. Make sure your local copy of the repo is up-to-date: `git pull`
+
+### Instructions
+
+1. Navigate to this directory: `cd cs101/2_DataStructures/2_DynamicArrays`
+2. Run `make docker-test` (if you have gcc installed and would rather build/run
    the tests locally, run `make test` instead). *You should see a bunch of
    failing tests*.
-6. Open the `dynamic_array.c` file. Implement the necessary code for each of the
+3. Open the `dynamic_array.c` file. Implement the necessary code for each of the
    `TODO` comments.
-7. Repeat steps 5-6 until all tests are passing.
+4. Repeat steps 5-6 until all tests are passing.
 
 Note: If you are curious about the tests themselves, they are in `test.c`.
 

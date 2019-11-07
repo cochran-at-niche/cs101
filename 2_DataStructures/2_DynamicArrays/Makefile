@@ -1,4 +1,3 @@
-
 all: dynamic_array
 
 dynamic_array: dynamic_array.h dynamic_array.c test.h test.c
