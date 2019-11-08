@@ -3,17 +3,16 @@
 The high-level goal of this assignment is to get familiar with the ideas of
 [abstract data types](https://en.wikipedia.org/wiki/Abstract_data_type) (ADTs)
 and [data structures](https://en.wikipedia.org/wiki/Data_structure). Don't worry
-too much about those concepts now, though. Just try to complete the assignment
-to the best of your ability. We will discuss it later.
+too much about those concepts now - just try to complete the assignment to the
+best of your ability. We will discuss it later.
 
 This also serves as a (hopefully) gentle introduction to the Go programming
-language. Don't worry about understanding the entirety of the language now. Just
-try to figure out how to solve the problem at hand. [Go by
-Example](https://gobyexample.com/) is a very good reference.
-
-Go is a high-level language with a lot of similarities to lower-level languages,
-especially C. This course will mostly be in C going forward, so don't worry too
-much about understanding all of the details of Go.
+language. Go is a high-level language with a lot of similarities to lower-level
+languages, especially C. This course will mostly be in C going forward, but it
+will be useful to compare/contrast the two languages as we progress through the
+course. So don't worry about understanding the entirety of the language now.
+Just try to figure out how to solve the problem at hand. [Go by
+Example](https://gobyexample.com/) is an excellent resource.
 
 ## Assignment
 
