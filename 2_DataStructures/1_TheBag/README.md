@@ -35,7 +35,7 @@ integers.
 2. Run `make test` (if you have `go` installed and would rather run the tests
    locally, run `go test` instead). *You should see a bunch of failing tests*.
 3. Open the `bag.go` file. Implement the necessary code for each of the `TODO` comments.
-4. Repeat steps 5-6 until all tests are passing.
+4. Repeat steps 2-3 until all tests are passing.
 
 Don't overthink it! Just do whatever comes to mind, and try to get the tests to
 pass. There is not a single "right" answer. Definitely feel free to ask for

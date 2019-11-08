@@ -46,7 +46,7 @@ we are storing are just integers.
    bunch of failing tests*.
 3. Open the `dynamic_array.c` file. Implement the necessary code for each of the
    `TODO` comments.
-4. Repeat steps 5-6 until all tests are passing.
+4. Repeat steps 2-3 until all tests are passing.
 
 Note: If you are curious about the tests themselves, they are in `test.c`.
 
