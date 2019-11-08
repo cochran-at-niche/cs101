@@ -10,16 +10,17 @@ This also serves as a (hopefully) gentle introduction to the Go programming
 language. Go is a high-level language with a lot of similarities to lower-level
 languages, especially C. This course will mostly be in C going forward, but it
 will be useful to compare/contrast the two languages as we progress through the
-course. So don't worry about understanding the entirety of the language now.
-Just try to figure out how to solve the problem at hand. [Go by
+course. Don't worry about understanding the entirety of the language now.  Just
+try to figure out how to solve the problem at hand. [Go by
 Example](https://gobyexample.com/) is an excellent resource.
 
 ## Assignment
 
-Your task is to implement a "bag" abstract data type, which I have provided the
-skeleton for (`bag.go`). The bag is a simple abstract data type with methods for
-adding items, removing items, and checking whether an item exists in the bag. In
-our case, the items are just integers.
+Your task is to implement a [bag](https://en.wikipedia.org/wiki/Set_(abstract_data_type)#Multiset)
+abstract data type, which I have provided the skeleton for (`bag.go`). The bag
+is a simple abstract data type with methods for adding items, removing items,
+and checking whether an item exists in the bag. In our case, the items are just
+integers.
 
 ### Prerequisites
 
