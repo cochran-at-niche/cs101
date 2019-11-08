@@ -41,9 +41,9 @@ we are storing are just integers.
 ### Instructions
 
 1. Navigate to this directory: `cd cs101/2_DataStructures/2_DynamicArrays`
-2. Run `make docker-test` (if you have gcc installed and would rather build/run
-   the tests locally, run `make test` instead). *You should see a bunch of
-   failing tests*.
+2. Run `make test` (if you have gcc installed and would rather build/run the
+   tests locally, run `make test.out && ./test.out` instead). *You should see a
+   bunch of failing tests*.
 3. Open the `dynamic_array.c` file. Implement the necessary code for each of the
    `TODO` comments.
 4. Repeat steps 5-6 until all tests are passing.
@@ -52,8 +52,8 @@ Note: If you are curious about the tests themselves, they are in `test.c`.
 
 ## Further Reading
 
-* Read about how Go slices are implemented (spoiler: they are essentially
-  dynamic arrays): https://blog.golang.org/go-slices-usage-and-internals
+* Read about how Go slices are implemented (spoiler: they are dynamic arrays):
+  https://blog.golang.org/go-slices-usage-and-internals
 * Run this program to see how the length and capacity of a Go slice change as
   items are added to it (this should look very familiar!):
   https://play.golang.org/p/JCFJGVJh0Gv

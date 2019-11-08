@@ -1,6 +1,6 @@
-all: test
-
 DIR = $(shell pwd)
+
+all: test
 
 test:
 	docker run --rm -it \

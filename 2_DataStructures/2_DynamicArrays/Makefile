@@ -1,14 +1,18 @@
-all: dynamic_array
+DIR = $(shell pwd)
 
-dynamic_array: dynamic_array.h dynamic_array.c test.h test.c
-	gcc -Wall -o $@ dynamic_array.c test.c
+all: test
 
-test: dynamic_array
-	./dynamic_array
+test:
+	docker run --rm -it \
+		--volume="$(DIR):/usr/src/dynamic_array" \
+		--workdir="/usr/src/dynamic_array" \
+		gcc:8.3 make docker-test
 
 docker-test:
-	docker build --tag=dynamic_array_test .
-	docker run --rm -it dynamic_array_test ./dynamic_array
+	gcc -Wall -o /test dynamic_array.h dynamic_array.c test.h test.c && /test
+
+test.out: dynamic_array.h dynamic_array.c test.h test.c
+	gcc -Wall -o $@ dynamic_array.h dynamic_array.c test.h test.c
 
 clean:
-	rm dynamic_array
+	rm test.out
