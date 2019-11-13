@@ -23,6 +23,6 @@ docker-run: docker-main
 
 docker:
 	docker run --rm -it \
-		--volume="$(DIR):/usr/src/scratch" \
-		--workdir="/usr/src/scratch" \
+		--volume="$(DIR):/usr/src/examples" \
+		--workdir="/usr/src/examples" \
 		gcc:8.3 make docker-run
