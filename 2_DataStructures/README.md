@@ -4,8 +4,8 @@ Rough syllabus:
 
 * Intro to Data Structures
 * Dynamic Arrays
-* Sorting and Searching
 * Linked Lists
+* Sorting and Searching
 * Binary Trees
 * Hash Maps
 * ???

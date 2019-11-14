@@ -1,5 +1,7 @@
 # Dynamic Arrays
 
+[Lecture Slides](https://docs.google.com/presentation/d/1ce7xoJFkOzaeHVtLlKMjTqQRrouImNf07GBbZ7iphyQ/edit?usp=sharing)
+
 The goal of this assignment is to gain an understanding of how memory is
 allocated, the limitations that imposes on us, and how we can cope with it by
 creating data structures that abstract the details of manual memory management
@@ -23,12 +25,12 @@ must keep track of its size (the current number of items in the array) as well
 as its capacity (the maximum number of items that can be stored in the array,
 given the amount of memory current allocated to it). When the size of the array
 reaches the capacity, the array needs to be resized to hold more items. This is
-typically done by allocated memory for a new array twice as large, copying all
+typically done by allocating memory for a new array twice as large, copying all
 the items over to it, and freeing the memory allocated for the original array.
 
 Our dynamic array has methods for adding items, removing items, and
 checking whether an item exists in the array. In other words, it implements the
-"bag" ADT from the previous lesson. Just like in the previous lesson, the items
+"Bag" ADT from the previous lesson. Just like in the previous lesson, the items
 we are storing are just integers.
 
 ### Prerequisites

@@ -128,7 +128,7 @@ func TestRemove_Many(t *testing.T) {
 	}
 
 	if bag.Size() != 0 {
-		t.Errorf("Expected bag to have a size of 100 after calling Add and Remove 100 times")
+		t.Errorf("Expected bag to have a size of 0 after calling Add and Remove 100 times")
 	}
 }
 
