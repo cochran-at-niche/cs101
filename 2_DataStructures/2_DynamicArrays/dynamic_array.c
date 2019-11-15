@@ -33,9 +33,9 @@ void dyn_arr_resize(dyn_arr *a) {
 }
 
 void dyn_arr_add(dyn_arr *a, int i) {
-	// Resize the array
-	// Adding this new element will bring the array to full capacity
 	if ((a->size) + 1 == (a->capacity)) {
+		// Resize the array
+		// Adding this new element will bring the array to full capacity
 		dyn_arr_resize(a);
 	}
 
