@@ -260,10 +260,10 @@ void test_linked_list_pop_front_many() {
     for (int i=0; i<100; i++) {
         linked_list_push_front(l, i);
     }
-    for (int i=0,j=100; i<100; i++,j--) {
+    for (int i=99; i>=0; i--) {
         int result = linked_list_pop_front(l);
         if (result != i) {
-            printf("Expected linked_list_pop_front() to return %d after calling it %d times\n", j, i);
+            printf("Expected linked_list_pop_front() to return %d\n", i);
             success = false;
             break;
         }
@@ -291,6 +291,7 @@ void test_linked_list_pop_front_duplicates() {
     bool success = true;
 
     linked_list* l = new_linked_list();
+    linked_list_push_front(l, 1);
     linked_list_push_front(l, 1);
     int result = linked_list_pop_front(l);
     if (result != 1) {
@@ -515,11 +516,10 @@ void test_linked_list_pop_back_many() {
     for (int i=0; i<100; i++) {
         linked_list_push_back(l, i);
     }
-    for (int i=0; i<100; i++) {
+    for (int i=99; i>=0; i--) {
         int result = linked_list_pop_back(l);
-        int expected = 99-i;
         if (result != i) {
-            printf("Expected linked_list_pop_back() to return %d after calling it %d times\n", expected, i);
+            printf("Expected linked_list_pop_back() to return %d\n", i);
             success = false;
             break;
         }
@@ -547,6 +547,7 @@ void test_linked_list_pop_back_duplicates() {
     bool success = true;
 
     linked_list* l = new_linked_list();
+    linked_list_push_back(l, 1);
     linked_list_push_back(l, 1);
     int result = linked_list_pop_back(l);
     if (result != 1) {
