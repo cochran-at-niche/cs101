@@ -38,7 +38,7 @@ int dyn_arr_size(dyn_arr *a) {
     return 0;
 }
 
-void dyn_arr_free(dyn_arr *a) {
+void free_dyn_arr(dyn_arr *a) {
     free(a->array);
     free(a); 
 }
