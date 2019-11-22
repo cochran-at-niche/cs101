@@ -35,7 +35,7 @@ bool dyn_arr_contains(dyn_arr *a, int i);
 // dyn_arr_size returns the number of items currently in the dynamic array.
 int dyn_arr_size(dyn_arr *a);
 
-// dyn_arr_free frees the memory allocated for the dynamic array (both the
+// free_dyn_arr frees the memory allocated for the dynamic array (both the
 // underlying array, as well as the dynamic array header struct)
 void free_dyn_arr(dyn_arr *a);
 
