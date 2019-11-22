@@ -1,4 +1,5 @@
 #include "linked_list.h"
+#include <stdio.h>
 
 
 // Helper functions (not defined in header file)
@@ -16,21 +17,19 @@ static node* new_node() {
 // insert_node_after inserts newNode after the specified node in the linked
 // list.
 static void insert_node_after(node* n, node* newNode) {
-    // TODO: Write code to insert newNode after the specified node.
-    // This will involve updating:
-    //  - The next pointer of the specified node
-    //  - The next and prev pointers of newNode
-    //  - The prev pointer of the node currently after the specified node
+    node* next = n->next;
+    n->next = newNode;
+    newNode->next = next;
+    next->prev = newNode;
+    newNode->prev = n;
 }
 
 // remove_node removes the specified node from the linked list, and frees the
 // memory associated with it.
 static void remove_node(node* n) {
-    // TODO: Write code to remove newNode from the linked list
-    // This will involve updating:
-    //  - The next pointer of the node before it in the list
-    //  - The prev pointer of the node after it in the list
-    // You will also have to free the memory associated with the removed node
+    n->prev->next = n->next;
+    n->next->prev = n->prev;
+    free(n);
 }
 
 
@@ -56,51 +55,42 @@ linked_list* new_linked_list() {
 
 // linked_list_push_front inserts the given item at the front of the linked list.
 void linked_list_push_front(linked_list *l, int i) {
-    // TODO: Write code to insert an item at the front of the list.
-    // This will involve:
-    //  - Allocating memeory for a new node
-    //  - Setting the value of the new node to i
-    //  - Calling insert_node_after to insert the new node after the sentinal node
-    //  - Incrementing the size field of the linked list
+    node* newNode = new_node();
+    newNode->val = i;
+    insert_node_after(l->sentinal, newNode);
+    l->size++;
 }
 
 // linked_list_pop_front removes the item at the front of the list and returns it.
 int linked_list_pop_front(linked_list *l) {
-    // TODO: Write code to remove and return the item at the front of the list.
-    // This will involve:
-    //  - Returning -1 if the list is empty, otherwise:
-    //  - Calling remove_node to remove the node at the front of the list
-    //  - Freeing the memory associated with the removed node
-    //  - Returning the value of the removed node (make sure to store the value
-    //      before your free the node's memory!)
-    //  - Decrementing the size field of the linked list
+    if (l->sentinal->next == l->sentinal) {
+        return -1;
+    }
 
-    return -1;
+    int val = l->sentinal->next->val;
+    remove_node(l->sentinal->next);
+    l->size--;
+    return val;
 }
 
 // linked_list_push_back inserts the given item at the back of the linked list.
 void linked_list_push_back(linked_list *l, int i) {
-    // TODO: Write code to insert an item at the back of the list.
-    // This will involve:
-    //  - Allocating memeory for a new node
-    //  - Setting the value of the new node to i
-    //  - Calling insert_node_after to insert the new node before the sentinal
-    //      node (i.e. after the node that is currently before the sentinal node)
-    //  - Incrementing the size field of the linked list
+    node* newNode = new_node();
+    newNode->val = i;
+    insert_node_after(l->sentinal->prev, newNode);
+    l->size++;
 }
 
 // linked_list_pop_back removes the item at the back of the list and returns it.
 int linked_list_pop_back(linked_list *l) {
-    // TODO: Write code to remove and return the item at the back of the list.
-    // This will involve:
-    //  - Returning -1 if the list is empty, otherwise:
-    //  - Calling remove_node to remove the node at the back of the list
-    //  - Freeing the memory associated with the removed node
-    //  - Returning the value of the removed node (make sure to store the value
-    //      before your free the node's memory!)
-    //  - Decrementing the size field of the linked list
+    if (l->sentinal->prev == l->sentinal) {
+        return -1;
+    }
 
-    return -1;
+    int val = l->sentinal->prev->val;
+    remove_node(l->sentinal->prev);
+    l->size--;
+    return val;
 }
 
 // linked_list_remove removes the item out of the linked list, if it exists. If
@@ -108,32 +98,40 @@ int linked_list_pop_back(linked_list *l) {
 // them. If the item does not exist in the linked list, it will silently do
 // nothing.
 void linked_list_remove(linked_list *l, int i) {
-    // TODO: Iterate through the list (stopping when you get back to the
-    // sentinal node). Remove the first node whose value is equal to the
-    // specified int, or silently do nothing if that value doesn't exist in the
-    // linked list.
+    for (node* n = l->sentinal->next; n!= l->sentinal; n = n->next) {
+        if (n->val == i) {
+            remove_node(n);
+            l->size--;
+            return;
+        }
+    }
 }
 
 // linked_list_contains returns true if the given item exists in the linked
 // list, and false otherwise.
 bool linked_list_contains(linked_list *l, int i) {
-    // TODO: Iterate through the list (stopping when you get back to the
-    // sentinal node). Return true if it contains the specified int, or false
-    // otherwise
+    for (node* n = l->sentinal->next; n!= l->sentinal; n = n->next) {
+        if (n->val == i) {
+            return true;
+        }
+    }
 
     return false;
 }
 
 // linked_list_size returns the number of items currently in the linked list.
 int linked_list_size(linked_list *l) {
-    // TODO: Return the current size of the list
-
-    return 0;
+    return l->size;
 }
 
 // free_linked_list frees the memory allocated for the linked list (the memory
 // of any remaining nodes, as well as the linked list header struct itself).
 void free_linked_list(linked_list *l) {
-    // TODO: Free the memory associated with any nodes remaining in the list,
-    // then free the memory associated with the linked_list struct itself
+    node* next;
+    for (node* n = l->sentinal->next; n != l->sentinal; n = next) {
+        next = n->next;
+        free(n);
+    }
+    free(l->sentinal);
+    free(l);
 }
