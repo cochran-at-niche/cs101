@@ -30,6 +30,8 @@ void linked_list_push_back(linked_list *l, int i);
 
 int linked_list_pop_back(linked_list *l);
 
+void linked_list_remove(linked_list *l, int i);
+
 bool linked_list_contains(linked_list *l, int i);
 
 // linked_list_size returns the number of items currently in the linked list.
