@@ -584,7 +584,7 @@ void test_linked_list_pop_back_duplicates() {
 // push_back, pop_front:
 
 void test_linked_list_push_back_pop_front() {
-    printf("\ntest_linked_list_pop_front\n");
+    printf("\ntest_linked_list_push_back_pop_front\n");
     bool success = true;
 
     linked_list* l = new_linked_list();
@@ -610,7 +610,7 @@ void test_linked_list_push_back_pop_front() {
 }
 
 void test_linked_list_push_back_pop_front_multiple() {
-    printf("\ntest_linked_list_pop_front_multiple\n");
+    printf("\ntest_linked_list_push_back_pop_front_multiple\n");
     bool success = true;
 
     linked_list* l = new_linked_list();
@@ -650,7 +650,7 @@ void test_linked_list_push_back_pop_front_multiple() {
 }
 
 void test_linked_list_push_back_pop_front_many() {
-    printf("\ntest_linked_list_pop_front_many\n");
+    printf("\ntest_linked_list_push_back_pop_front_many\n");
     bool success = true;
 
     linked_list* l = new_linked_list();
@@ -686,7 +686,7 @@ void test_linked_list_push_back_pop_front_many() {
 // push front, pop back:
 
 void test_linked_list_push_front_pop_back() {
-    printf("\ntest_linked_list_pop_back\n");
+    printf("\ntest_linked_list_push_front_pop_back\n");
     bool success = true;
 
     linked_list* l = new_linked_list();
@@ -712,7 +712,7 @@ void test_linked_list_push_front_pop_back() {
 }
 
 void test_linked_list_push_front_pop_back_multiple() {
-    printf("\ntest_linked_list_pop_back_multiple\n");
+    printf("\ntest_linked_list_push_front_pop_back_multiple\n");
     bool success = true;
 
     linked_list* l = new_linked_list();
@@ -752,7 +752,7 @@ void test_linked_list_push_front_pop_back_multiple() {
 }
 
 void test_linked_list_push_front_pop_back_many() {
-    printf("\ntest_linked_list_pop_back_many\n");
+    printf("\ntest_linked_list_push_front_pop_back_many\n");
     bool success = true;
 
     linked_list* l = new_linked_list();
