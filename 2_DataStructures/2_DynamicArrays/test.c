@@ -146,7 +146,7 @@ void test_dyn_arr_remove() {
 }
 
 void test_dyn_arr_remove_multiple() {
-    printf("\ntest_dyn_arr_remove_multiple)\n");
+    printf("\ntest_dyn_arr_remove_multiple\n");
     bool success = true;
 
     dyn_arr *a = new_dyn_arr();
