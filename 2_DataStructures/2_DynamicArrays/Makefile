@@ -14,5 +14,8 @@ docker-test:
 test.out: dynamic_array.h dynamic_array.c test.h test.c
 	gcc -Wall -o $@ dynamic_array.h dynamic_array.c test.h test.c
 
+mac-test.out: dynamic_array.h dynamic_array.c test.h test.c
+	gcc-8 -Wall -o $@ dynamic_array.h dynamic_array.c test.h test.c
+
 clean:
 	rm test.out

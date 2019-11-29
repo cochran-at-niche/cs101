@@ -20,6 +20,9 @@ void dyn_arr_resize(dyn_arr *a) {
 	int new_cap = (a->capacity) * 2;
 	int *new_arr = malloc(sizeof(int) * new_cap);
 
+	// Update the array's capacity to the new capacity
+	(a->capacity) = new_cap;
+
 	// Copy over every element of the current array to the new array
 	for (j = 0; j < (a->size); j++) {
 		new_arr[j] = (a->array)[j];
