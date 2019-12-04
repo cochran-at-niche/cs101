@@ -1,5 +1,7 @@
 # Linked Lists
 
+[Lecture Slides](https://docs.google.com/presentation/d/1Dx6PoMjyNe96TGa-06eUExt5f3-goE7GnRqZvv0TcS4/edit?usp=sharing)
+
 In the previous assignment, we implemented a dynamic array that automatically
 resized when it reached capacity. The resize operation involved allocating
 memory for a new, larger array, and copying the entire array over, which is
