@@ -1,6 +1,6 @@
 # Dynamic Arrays
 
-[Lecture Slides](https://docs.google.com/presentation/d/1ce7xoJFkOzaeHVtLlKMjTqQRrouImNf07GBbZ7iphyQ/edit?usp=sharing)
+[Class 1 Lecture Slides](https://docs.google.com/presentation/d/1ce7xoJFkOzaeHVtLlKMjTqQRrouImNf07GBbZ7iphyQ/edit?usp=sharing)
 
 The goal of this assignment is to gain an understanding of how memory is
 allocated, the limitations that imposes on us, and how we can cope with it by
