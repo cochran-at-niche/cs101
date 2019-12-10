@@ -54,7 +54,7 @@ linked_list* new_linked_list() {
 }
 
 // linked_list_push_front inserts the given item at the front of the linked list.
-void linked_list_push_front(linked_list *l, int i) {
+void linked_list_push_front(linked_list* l, int i) {
     node* newNode = new_node();
     newNode->val = i;
     insert_node_after(l->sentinal, newNode);
@@ -62,7 +62,7 @@ void linked_list_push_front(linked_list *l, int i) {
 }
 
 // linked_list_pop_front removes the item at the front of the list and returns it.
-int linked_list_pop_front(linked_list *l) {
+int linked_list_pop_front(linked_list* l) {
     if (l->sentinal->next == l->sentinal) {
         return -1;
     }
@@ -74,7 +74,7 @@ int linked_list_pop_front(linked_list *l) {
 }
 
 // linked_list_push_back inserts the given item at the back of the linked list.
-void linked_list_push_back(linked_list *l, int i) {
+void linked_list_push_back(linked_list* l, int i) {
     node* newNode = new_node();
     newNode->val = i;
     insert_node_after(l->sentinal->prev, newNode);
@@ -82,7 +82,7 @@ void linked_list_push_back(linked_list *l, int i) {
 }
 
 // linked_list_pop_back removes the item at the back of the list and returns it.
-int linked_list_pop_back(linked_list *l) {
+int linked_list_pop_back(linked_list* l) {
     if (l->sentinal->prev == l->sentinal) {
         return -1;
     }
@@ -97,7 +97,7 @@ int linked_list_pop_back(linked_list *l) {
 // there are duplicate items in the linked list, it will only remove one of
 // them. If the item does not exist in the linked list, it will silently do
 // nothing.
-void linked_list_remove(linked_list *l, int i) {
+void linked_list_remove(linked_list* l, int i) {
     for (node* n = l->sentinal->next; n!= l->sentinal; n = n->next) {
         if (n->val == i) {
             remove_node(n);
@@ -109,7 +109,7 @@ void linked_list_remove(linked_list *l, int i) {
 
 // linked_list_contains returns true if the given item exists in the linked
 // list, and false otherwise.
-bool linked_list_contains(linked_list *l, int i) {
+bool linked_list_contains(linked_list* l, int i) {
     for (node* n = l->sentinal->next; n!= l->sentinal; n = n->next) {
         if (n->val == i) {
             return true;
@@ -120,13 +120,13 @@ bool linked_list_contains(linked_list *l, int i) {
 }
 
 // linked_list_size returns the number of items currently in the linked list.
-int linked_list_size(linked_list *l) {
+int linked_list_size(linked_list* l) {
     return l->size;
 }
 
 // free_linked_list frees the memory allocated for the linked list (the memory
 // of any remaining nodes, as well as the linked list header struct itself).
-void free_linked_list(linked_list *l) {
+void free_linked_list(linked_list* l) {
     node* next;
     for (node* n = l->sentinal->next; n != l->sentinal; n = next) {
         next = n->next;
