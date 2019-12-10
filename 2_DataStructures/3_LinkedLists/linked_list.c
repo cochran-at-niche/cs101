@@ -55,7 +55,7 @@ linked_list* new_linked_list() {
 }
 
 // linked_list_push_front inserts the given item at the front of the linked list.
-void linked_list_push_front(linked_list *l, int i) {
+void linked_list_push_front(linked_list* l, int i) {
     // TODO: Write code to insert an item at the front of the list.
     // This will involve:
     //  - Allocating memeory for a new node
@@ -65,7 +65,7 @@ void linked_list_push_front(linked_list *l, int i) {
 }
 
 // linked_list_pop_front removes the item at the front of the list and returns it.
-int linked_list_pop_front(linked_list *l) {
+int linked_list_pop_front(linked_list* l) {
     // TODO: Write code to remove and return the item at the front of the list.
     // This will involve:
     //  - Returning -1 if the list is empty, otherwise:
@@ -79,7 +79,7 @@ int linked_list_pop_front(linked_list *l) {
 }
 
 // linked_list_push_back inserts the given item at the back of the linked list.
-void linked_list_push_back(linked_list *l, int i) {
+void linked_list_push_back(linked_list* l, int i) {
     // TODO: Write code to insert an item at the back of the list.
     // This will involve:
     //  - Allocating memeory for a new node
@@ -90,7 +90,7 @@ void linked_list_push_back(linked_list *l, int i) {
 }
 
 // linked_list_pop_back removes the item at the back of the list and returns it.
-int linked_list_pop_back(linked_list *l) {
+int linked_list_pop_back(linked_list* l) {
     // TODO: Write code to remove and return the item at the back of the list.
     // This will involve:
     //  - Returning -1 if the list is empty, otherwise:
@@ -107,7 +107,7 @@ int linked_list_pop_back(linked_list *l) {
 // there are duplicate items in the linked list, it will only remove one of
 // them. If the item does not exist in the linked list, it will silently do
 // nothing.
-void linked_list_remove(linked_list *l, int i) {
+void linked_list_remove(linked_list* l, int i) {
     // TODO: Iterate through the list (stopping when you get back to the
     // sentinal node). Remove the first node whose value is equal to the
     // specified int, or silently do nothing if that value doesn't exist in the
@@ -116,7 +116,7 @@ void linked_list_remove(linked_list *l, int i) {
 
 // linked_list_contains returns true if the given item exists in the linked
 // list, and false otherwise.
-bool linked_list_contains(linked_list *l, int i) {
+bool linked_list_contains(linked_list* l, int i) {
     // TODO: Iterate through the list (stopping when you get back to the
     // sentinal node). Return true if it contains the specified int, or false
     // otherwise
@@ -125,7 +125,7 @@ bool linked_list_contains(linked_list *l, int i) {
 }
 
 // linked_list_size returns the number of items currently in the linked list.
-int linked_list_size(linked_list *l) {
+int linked_list_size(linked_list* l) {
     // TODO: Return the current size of the list
 
     return 0;
@@ -133,7 +133,7 @@ int linked_list_size(linked_list *l) {
 
 // free_linked_list frees the memory allocated for the linked list (the memory
 // of any remaining nodes, as well as the linked list header struct itself).
-void free_linked_list(linked_list *l) {
+void free_linked_list(linked_list* l) {
     // TODO: Free the memory associated with any nodes remaining in the list,
     // then free the memory associated with the linked_list struct itself
 }
