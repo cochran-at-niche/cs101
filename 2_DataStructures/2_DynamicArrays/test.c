@@ -30,6 +30,7 @@ void test_new_dyn_arr() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_add() {
@@ -50,6 +51,7 @@ void test_dyn_arr_add() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_add_multiple() {
@@ -75,6 +77,7 @@ void test_dyn_arr_add_multiple() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_add_many() {
@@ -100,6 +103,7 @@ void test_dyn_arr_add_many() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_add_duplicates() {
@@ -121,6 +125,7 @@ void test_dyn_arr_add_duplicates() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_remove() {
@@ -143,6 +148,7 @@ void test_dyn_arr_remove() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_remove_multiple() {
@@ -174,6 +180,7 @@ void test_dyn_arr_remove_multiple() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_remove_many() {
@@ -202,6 +209,7 @@ void test_dyn_arr_remove_many() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_remove_non_existent() {
@@ -228,6 +236,7 @@ void test_dyn_arr_remove_non_existent() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
 
 void test_dyn_arr_remove_duplicates() {
@@ -259,4 +268,5 @@ void test_dyn_arr_remove_duplicates() {
     if (success) {
         printf("Success\n");
     }
+    free_dyn_arr(a);
 }
