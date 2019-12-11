@@ -797,11 +797,11 @@ void test_linked_list_push_front_remove() {
     linked_list_remove(l, 1);
 
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_front(1) and linked_list_remove(1)\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_front(1) and linked_list_remove(1)\n");
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 0 after calling linked_list_push_front(1) and linked_list_remove(1)\n");
+		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_front(1) and linked_list_remove(1)\n");
         success = false;
     }
 
@@ -820,20 +820,20 @@ void test_linked_list_push_front_remove_multiple() {
     linked_list_push_front(l, 2);
     linked_list_remove(l, 1);
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_front(1), linked_list_push_front(2), and linked_list_remove(1)\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_front(1), linked_list_push_front(2), and linked_list_remove(1)\n");
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), and linked_list_remove(1)\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), and linked_list_remove(1)\n");
         success = false;
     }
     linked_list_remove(l, 2);
     if (linked_list_contains(l, 2)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_front(1), linked_list_push_front(2), linked_list_remove(1), and linked_list_remove(2)\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_front(1), linked_list_push_front(2), linked_list_remove(1), and linked_list_remove(2)\n");
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), linked_list_remove(1), and linked_list_remove(2)\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), linked_list_remove(1), and linked_list_remove(2)\n");
         success = false;
     }
 
@@ -856,13 +856,13 @@ void test_linked_list_push_front_remove_many() {
     }
     for (int i=0; i<100; i++) {
         if (linked_list_contains(l, i)) {
-            printf("Expected dynamic array to not contain %d after calling linked_list_push_front(%d) and linked_list_remove(%d)\n", i, i, i);
+            printf("Expected linked list to not contain %d after calling linked_list_push_front(%d) and linked_list_remove(%d)\n", i, i, i);
             success = false;
             break;
         }
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 0 after calling linked_list_push_front and linked_list_remove 100 times\n");
+		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_front and linked_list_remove 100 times\n");
         success = false;
     }
 
@@ -879,17 +879,17 @@ void test_linked_list_push_front_remove_non_existent() {
     linked_list *l = new_linked_list();
     linked_list_remove(l, 1);
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_remove(1) on an empty dynamic array\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_remove(1) on an empty linked list\n");
         success = false;
     }
     linked_list_push_front(l, 1);
     linked_list_remove(l, 2);
     if (linked_list_contains(l, 2)) {
-        printf("Expected dynamic array to not contain 2 after calling linked_list_remove(1), linked_list_push_front(1), and linked_list_remove(2) on an empty dynamic array\n");
+        printf("Expected linked list to not contain 2 after calling linked_list_remove(1), linked_list_push_front(1), and linked_list_remove(2) on an empty linked list\n");
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_remove(1), linked_list_push_front(1), and linked_list_remove(2) on an empty dynamic array\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_remove(1), linked_list_push_front(1), and linked_list_remove(2) on an empty linked list\n");
         success = false;
     }
 
@@ -908,20 +908,20 @@ void test_linked_list_push_front_remove_duplicates() {
     linked_list_push_front(l, 1);
     linked_list_remove(l, 1);
     if (!linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to contain 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) once\n");
+        printf("Expected linked list to contain 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) once\n");
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) once\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) once\n");
         success = false;
     }
     linked_list_remove(l, 1);
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) twice\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) twice\n");
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 0 after calling linked_list_push_front(1) twice and linked_list_remove(1) twice\n");
+		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_front(1) twice and linked_list_remove(1) twice\n");
         success = false;
     }
 
@@ -992,11 +992,11 @@ void test_linked_list_push_back_remove() {
     linked_list_remove(l, 1);
 
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_back(1) and linked_list_remove(1)\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_back(1) and linked_list_remove(1)\n");
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 0 after calling linked_list_push_back(1) and linked_list_remove(1)\n");
+		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_back(1) and linked_list_remove(1)\n");
         success = false;
     }
 
@@ -1015,20 +1015,20 @@ void test_linked_list_push_back_remove_multiple() {
     linked_list_push_back(l, 2);
     linked_list_remove(l, 1);
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_back(1), linked_list_push_back(2), and linked_list_remove(1)\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_back(1), linked_list_push_back(2), and linked_list_remove(1)\n");
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), and linked_list_remove(1)\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), and linked_list_remove(1)\n");
         success = false;
     }
     linked_list_remove(l, 2);
     if (linked_list_contains(l, 2)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_back(1), linked_list_push_back(2), linked_list_remove(1), and linked_list_remove(2)\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_back(1), linked_list_push_back(2), linked_list_remove(1), and linked_list_remove(2)\n");
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), linked_list_remove(1), and linked_list_remove(2)\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), linked_list_remove(1), and linked_list_remove(2)\n");
         success = false;
     }
 
@@ -1051,13 +1051,13 @@ void test_linked_list_push_back_remove_many() {
     }
     for (int i=0; i<100; i++) {
         if (linked_list_contains(l, i)) {
-            printf("Expected dynamic array to not contain %d after calling linked_list_push_back(%d) and linked_list_remove(%d)\n", i, i, i);
+            printf("Expected linked list to not contain %d after calling linked_list_push_back(%d) and linked_list_remove(%d)\n", i, i, i);
             success = false;
             break;
         }
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 0 after calling linked_list_push_back and linked_list_remove 100 times\n");
+		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_back and linked_list_remove 100 times\n");
         success = false;
     }
 
@@ -1074,17 +1074,17 @@ void test_linked_list_push_back_remove_non_existent() {
     linked_list *l = new_linked_list();
     linked_list_remove(l, 1);
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_remove(1) on an empty dynamic array\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_remove(1) on an empty linked list\n");
         success = false;
     }
     linked_list_push_back(l, 1);
     linked_list_remove(l, 2);
     if (linked_list_contains(l, 2)) {
-        printf("Expected dynamic array to not contain 2 after calling linked_list_remove(1), linked_list_push_back(1), and linked_list_remove(2) on an empty dynamic array\n");
+        printf("Expected linked list to not contain 2 after calling linked_list_remove(1), linked_list_push_back(1), and linked_list_remove(2) on an empty linked list\n");
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_remove(1), linked_list_push_back(1), and linked_list_remove(2) on an empty dynamic array\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_remove(1), linked_list_push_back(1), and linked_list_remove(2) on an empty linked list\n");
         success = false;
     }
 
@@ -1103,20 +1103,20 @@ void test_linked_list_push_back_remove_duplicates() {
     linked_list_push_back(l, 1);
     linked_list_remove(l, 1);
     if (!linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to contain 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) once\n");
+        printf("Expected linked list to contain 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) once\n");
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected dynamic array to have a linked_list_size of 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) once\n");
+		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) once\n");
         success = false;
     }
     linked_list_remove(l, 1);
     if (linked_list_contains(l, 1)) {
-        printf("Expected dynamic array to not contain 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) twice\n");
+        printf("Expected linked list to not contain 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) twice\n");
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected dynamic array to have a linked_list_size of 0 after calling linked_list_push_back(1) twice and linked_list_remove(1) twice\n");
+		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_back(1) twice and linked_list_remove(1) twice\n");
         success = false;
     }
 
