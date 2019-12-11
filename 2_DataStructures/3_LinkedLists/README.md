@@ -1,6 +1,7 @@
 # Linked Lists
 
 [Class 2 Lecture Slides](https://docs.google.com/presentation/d/1Dx6PoMjyNe96TGa-06eUExt5f3-goE7GnRqZvv0TcS4/edit?usp=sharing)
+
 [Class 3 Lecture Slides](https://docs.google.com/presentation/d/10PrJNRxBrqLBX-KCDropbsOVwkFdWX5t94RIJjmcyHQ/edit?usp=sharing)
 
 In the previous assignment, we implemented a dynamic array that automatically
