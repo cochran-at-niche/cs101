@@ -5,7 +5,7 @@ all: docker
 # Local targets
 
 search: search.c
-	gcc -Wall -o $@ search.c
+	gcc -Wall -o $@ dynamic_array.c search.c
 
 run: search
 	./search
@@ -16,7 +16,7 @@ clean:
 # Docker targets
 
 docker-search: search.c
-	gcc -Wall -o /search search.c
+	gcc -Wall -o /search dynamic_array.c search.c
 
 docker-run: docker-search
 	/search
