@@ -27,9 +27,9 @@ int main() {
     int target;
     scanf("%d", &target);
 
-    // Brute force search
-    int j = dyn_arr_brute_force(a, target);
-    printf("Brute force: %s\n", j ? "true" : "false");
+    // Sequential search
+    int j = dyn_arr_sequential_search(a, target);
+    printf("Sequential search: %s\n", j ? "true" : "false");
 
     // Binary search
     int k = dyn_arr_binary_search(a, target);

@@ -47,7 +47,7 @@ void dyn_arr_remove(dyn_arr *a, int i) {
     }
 }
 
-bool dyn_arr_brute_force(dyn_arr *a, int i) {
+bool dyn_arr_sequential_search(dyn_arr *a, int i) {
     for (int j=0; j < a->size; j++) {
         if (a->array[j] == i) {
             return true;

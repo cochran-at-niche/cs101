@@ -29,9 +29,9 @@ void dyn_arr_add(dyn_arr *a, int i);
 void dyn_arr_remove(dyn_arr *a, int i);
 
 
-// dyn_arr_brute_force does a brute force search. Returns true if the given
-// item exists in the dynamic array, and false otherwise.
-bool dyn_arr_brute_force(dyn_arr *a, int i);
+// dyn_arr_sequential_search does a sequential search. Returns true if the
+// given item exists in the dynamic array, and false otherwise.
+bool dyn_arr_sequential_search(dyn_arr *a, int i);
 
 // dyn_arr_binary_search does a binary search. Returns true if the given
 // item exists in the dynamic array, and false otherwise.
