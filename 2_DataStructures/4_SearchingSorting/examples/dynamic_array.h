@@ -40,6 +40,14 @@ bool dyn_arr_binary_search(dyn_arr *a, int i);
 // dyn_arr_sort sorts the elements of the dynamic array.
 void dyn_arr_sort(dyn_arr *a);
 
+// dyn_arr_insertion_sort uses insertion sort to sort the elements of the
+// dynamic array.
+void dyn_arr_insertion_sort(dyn_arr* a);
+
+// dyn_arr_selection_sort uses selection sort to sort the elements of the
+// dynamic array.
+void dyn_arr_selection_sort(dyn_arr* a);
+
 // dyn_arr_size returns the number of items currently in the dynamic array.
 int dyn_arr_size(dyn_arr *a);
 

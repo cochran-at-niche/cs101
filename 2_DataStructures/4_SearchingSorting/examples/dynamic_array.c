@@ -74,21 +74,33 @@ bool dyn_arr_binary_search(dyn_arr* a, int i) {
     return false;
 }
 
-int comp (const void * elem1, const void * elem2) 
-{
-    int f = *((int*)elem1);
-    int s = *((int*)elem2);
-    if (f > s) {
-        return  1;
-    } else if (f < s) {
-        return -1;
-    } else {
-        return 0;
+void swap(dyn_arr* a, int i, int j) {
+    int tmp = a->array[i];
+    a->array[i] = a->array[j];
+    a->array[j] = tmp;
+}
+
+void dyn_arr_selection_sort(dyn_arr* a) {
+    for (int i = 0; i < a->size; i++) {
+        int min = i;
+        for (int j = i+1; j < a->size; j++) {
+            if (a->array[j] < a->array[min]) {
+                min = j;
+            }
+        }
+        swap(a, i, min);
     }
 }
 
-void dyn_arr_sort(dyn_arr* a) {
-    qsort(a->array, a->size, sizeof(*a->array), comp);
+void dyn_arr_insertion_sort(dyn_arr* a) {
+    for (int i = 0; i < a->size; i++) {
+        for (int j = i; j > 0; j--) {
+            if (a->array[j] >= a->array[j-1]) {
+                break;
+            }
+            swap(a, j, j-1);
+        }
+    }
 }
 
 int dyn_arr_size(dyn_arr *a) {
@@ -96,7 +108,7 @@ int dyn_arr_size(dyn_arr *a) {
 }
 
 void dyn_arr_print(dyn_arr *a) {
-    for (int i = 0; i<a->size; i++) {
+    for (int i = 0; i < a->size; i++) {
         printf(" %d", a->array[i]);
     }
     printf("\n");

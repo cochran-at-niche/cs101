@@ -16,7 +16,7 @@ int main() {
     }
 
     // Sort it
-    dyn_arr_sort(a);
+    dyn_arr_selection_sort(a);
 
     // Print it
     printf("Array:");
