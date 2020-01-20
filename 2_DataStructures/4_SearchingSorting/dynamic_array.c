@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <stdbool.h>
+#include <stdio.h>
 
 #include "dynamic_array.h"
 
@@ -57,6 +57,24 @@ bool dyn_arr_contains(dyn_arr *a, int i) {
         }
     }
     return false;
+}
+
+void dyn_arr_insertion_sort(dyn_arr *a) {
+    for (int i = 0; i < a->size; i++) {
+        int tmp = a->array[i];
+        for (int j = i; j > 0; j--) {
+            if (a->array[j] >= a->array[j-1]) {
+                a->array[j] = tmp;
+                break;
+            }
+            a->array[j] = a->array[j-1];
+        }
+    }
+}
+
+void dyn_arr_sort(dyn_arr *a) {
+    // TODO: Implement a O(n log n) sorting algorithm (e.g. merge sort, quick
+    // sort, or heap sort). The operation should modify the array in-place.
 }
 
 int dyn_arr_size(dyn_arr *a) {

@@ -1,6 +1,7 @@
-#include "linked_list.h"
-#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
+#include "linked_list.h"
 
 // Helper functions (not defined in header file)
 
