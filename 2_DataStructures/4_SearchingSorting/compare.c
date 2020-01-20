@@ -5,7 +5,7 @@
 
 #include "dynamic_array.h"
 
-const int RUNS = 10;
+const int RUNS = 1;
 const int MAX_INT = 1000;
 
 int main() {
