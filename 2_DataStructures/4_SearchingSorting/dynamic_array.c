@@ -62,13 +62,14 @@ bool dyn_arr_contains(dyn_arr *a, int i) {
 void dyn_arr_insertion_sort(dyn_arr *a) {
     for (int i = 0; i < a->size; i++) {
         int tmp = a->array[i];
-        for (int j = i; j > 0; j--) {
-            if (a->array[j] >= a->array[j-1]) {
-                a->array[j] = tmp;
+        int j;
+        for (j = i; j > 0; j--) {
+            if (tmp >= a->array[j-1]) {
                 break;
             }
             a->array[j] = a->array[j-1];
         }
+        a->array[j] = tmp;
     }
 }
 
