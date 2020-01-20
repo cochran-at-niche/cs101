@@ -5,7 +5,7 @@
 
 #include "dynamic_array.h"
 
-const int RUNS = 100;
+const int RUNS = 10;
 const int MAX_INT = 1000;
 
 int main() {
@@ -16,8 +16,10 @@ int main() {
         int size = sizes[i];
         printf("\nSorting random array of length %d:\n", size);
 
-        double total1, total2;
+        double total1, total2 = 0;
         for (int j = 0; j < RUNS; j++) {
+
+            // Create two new dynamic arrays, filled with random numbers
             dyn_arr *a1 = new_dyn_arr();
             dyn_arr *a2 = new_dyn_arr();
             for (int j = 0; j < size; j++) {
@@ -43,8 +45,8 @@ int main() {
         double avg1 = (total1 / CLOCKS_PER_SEC) / RUNS;
         double avg2 = (total2 / CLOCKS_PER_SEC) / RUNS;
 
-        printf("Insertion sort: %fs\n", avg1);
-        printf("Custom sort: %fs\n", avg2);
+        printf("Insertion sort:\t%fs\n", avg1);
+        printf("Custom sort:\t%fs\n", avg2);
     }
 }
 
