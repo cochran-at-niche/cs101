@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "dynamic_array.h"
 
 const int INITIAL_CAPACITY = 2;

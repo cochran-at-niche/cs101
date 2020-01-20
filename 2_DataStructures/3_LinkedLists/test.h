@@ -1,5 +1,3 @@
-#include "linked_list.h"
-
 #ifndef TEST_H
 #define TEST_H
 

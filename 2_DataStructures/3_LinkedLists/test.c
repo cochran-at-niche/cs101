@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "linked_list.h"
 #include "test.h"
 
 int main() {
