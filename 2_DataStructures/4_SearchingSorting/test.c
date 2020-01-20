@@ -1,7 +1,9 @@
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
+#include "dynamic_array.h"
 #include "test.h"
 
 const int MAX_INT = 1000;
