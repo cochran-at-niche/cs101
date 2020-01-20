@@ -9,9 +9,9 @@
 const int MAX_INT = 1000;
 
 int main() {
-    test_dyn_arr_sort_random();
     test_dyn_arr_sort_in_order();
     test_dyn_arr_sort_reverse_order();
+    test_dyn_arr_sort_random();
 }
 
 int comp (const void* elem1, const void* elem2) 
@@ -42,17 +42,17 @@ void test_dyn_arr_sort_in_order() {
         int size = sizes[i];
         printf("\nSorting in-order array of length %d:\n", size);
 
-        dyn_arr *a = new_dyn_arr();
         int oracle[size];
+        dyn_arr *a = new_dyn_arr();
         for (int j = 0; j < size; j++) {
-            dyn_arr_add(a, j);
             oracle[j] = j;
+            dyn_arr_add(a, j);
         }
 
         qsort(oracle, size, sizeof(int), comp);
         dyn_arr_sort(a);
 
-        if (memcmp(a->array, oracle, sizeof(int)) != 0) {
+        if (memcmp(a->array, oracle, sizeof(int)*size) != 0) {
             printf("Expected: ");
             print_array(oracle, size);
             printf("Actual: ");
@@ -73,17 +73,17 @@ void test_dyn_arr_sort_reverse_order() {
         int size = sizes[i];
         printf("\nSorting reverse-order array of length %d:\n", size);
 
-        dyn_arr *a = new_dyn_arr();
         int oracle[size];
+        dyn_arr *a = new_dyn_arr();
         for (int j = size-1; j >= 0; j--) {
-            dyn_arr_add(a, j);
             oracle[j] = j;
+            dyn_arr_add(a, j);
         }
 
         qsort(oracle, size, sizeof(int), comp);
         dyn_arr_sort(a);
 
-        if (memcmp(a->array, oracle, sizeof(int)) != 0) {
+        if (memcmp(a->array, oracle, sizeof(int)*size) != 0) {
             printf("Expected: ");
             print_array(oracle, size);
             printf("Actual: ");
@@ -105,18 +105,18 @@ void test_dyn_arr_sort_random() {
         int size = sizes[i];
         printf("\nSorting random array of length %d:\n", size);
 
-        dyn_arr *a = new_dyn_arr();
         int oracle[size];
+        dyn_arr *a = new_dyn_arr();
         for (int j = 0; j < size; j++) {
             int num = rand() % MAX_INT;
-            dyn_arr_add(a, num);
             oracle[j] = num;
+            dyn_arr_add(a, num);
         }
 
-        dyn_arr_sort(a);
         qsort(oracle, size, sizeof(int), comp);
+        dyn_arr_sort(a);
 
-        if (memcmp(a->array, oracle, sizeof(int)) != 0) {
+        if (memcmp(a->array, oracle, sizeof(int)*size) != 0) {
             printf("Expected: ");
             print_array(oracle, size);
             printf("Actual: ");
@@ -128,4 +128,3 @@ void test_dyn_arr_sort_random() {
         free_dyn_arr(a);
     }
 }
-
