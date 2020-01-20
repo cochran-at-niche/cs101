@@ -109,9 +109,8 @@ int dyn_arr_size(dyn_arr *a) {
 
 void dyn_arr_print(dyn_arr *a) {
     for (int i = 0; i < a->size; i++) {
-        printf(" %d", a->array[i]);
+        printf("%d ", a->array[i]);
     }
-    printf("\n");
 }
 
 void free_dyn_arr(dyn_arr *a) {
