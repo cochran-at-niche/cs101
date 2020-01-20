@@ -1,9 +1,7 @@
-#include <stdlib.h>
 #include <stdbool.h>
 
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
-
 
 // node represents a node in a doubly-linked list. The next field holds a
 // pointer to the next item in the list, the prev field holds a pointer to the
