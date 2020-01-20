@@ -72,9 +72,39 @@ void dyn_arr_insertion_sort(dyn_arr *a) {
     }
 }
 
+void swap(dyn_arr *a, int i, int j) {
+    int tmp = a->array[i];
+    a->array[i] = a->array[j];
+    a->array[j] = tmp;
+}
+
+int partition(dyn_arr *a, int start, int end) {
+    int pivot = a->array[(start + end) / 2];
+
+    int i = start - 1;
+    int j = end + 1;
+    while (true) {
+        do i++; while (a->array[i] < pivot);
+        do j--; while (a->array[j] > pivot);
+        if (i >= j) {
+            return j;
+        }
+        swap(a, i, j);
+    }
+}
+
+void quick_sort(dyn_arr *a, int start, int end) {
+    if (end <= start) {
+        return;
+    }
+
+    int pivot = partition(a, start, end);
+    quick_sort(a, start, pivot);
+    quick_sort(a, pivot+1, end);
+}
+
 void dyn_arr_sort(dyn_arr *a) {
-    // TODO: Implement a O(n log n) sorting algorithm (e.g. merge sort, quick
-    // sort, or heap sort). The operation should modify the array in-place.
+    quick_sort(a, 0, a->size-1);
 }
 
 int dyn_arr_size(dyn_arr *a) {
