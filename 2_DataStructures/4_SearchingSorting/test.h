@@ -1,5 +1,3 @@
-#include "dynamic_array.h"
-
 #ifndef TEST_H
 #define TEST_H
 
