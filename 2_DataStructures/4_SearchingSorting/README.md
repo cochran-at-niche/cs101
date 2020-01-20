@@ -27,9 +27,9 @@ However, it has two additional methods: `dyn_arr_insertion_sort`, which I have
 already implemented for you, and `dyn_arr_sort`, which you must implement
 yourself with one of the O(n log n) sorting algorithms mentioned above.
 
-After you are done and your implementation is passing the unit tests (`make
-test`), run `make compare` to see how your algorithm compares with insertion
-sort on different input sizes!
+After you are done and your implementation is passing the tests, run `make
+compare` to see how your algorithm compares with insertion sort on arrays of
+different sizes!
 
 ### Prerequisites
 
