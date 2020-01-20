@@ -9,7 +9,7 @@ const int RUNS = 10;
 const int MAX_INT = 1000;
 
 int main() {
-    int sizes[] = {100, 1000, 10000, 100000, 1000000};
+    int sizes[] = {1, 2, 5, 10, 100, 1000, 10000, 100000, 1000000};
 
     srand(time(0));
     for (int i = 0; i < sizeof(sizes) / sizeof(int); i++) {
