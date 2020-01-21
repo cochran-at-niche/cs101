@@ -48,8 +48,9 @@ void remove_node(node** n, int i) {
         if ((*n)->left != NULL && (*n)->right != NULL) {
             node** pre = predecessor(n);
             (*n)->val = (*pre)->val;
-            free(*pre);
-            *pre = NULL;
+            node* tmp = *pre;
+            *pre = (*pre)->left;
+            free(tmp)t;
         } else if ((*n)->left != NULL) {
             node* tmp = *n;
             *n = (*n)->left;
