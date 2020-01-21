@@ -29,12 +29,44 @@ void binary_tree_add(binary_tree *t, int i) {
     t->size++;
 }
 
-void node_remove(node* n, int i) {
-    // TODO
+node** predecessor(node** n) {
+    n = &(*n)->left;
+    while ((*n)->right != NULL) {
+        n = &(*n)->right;
+    }
+    return n;
+}
+
+void remove_node(node** n, int i) {
+    if (*n == NULL) {
+        return;
+    } else if (i > (*n)->val) {
+        remove_node(&(*n)->right, i);
+    } else if (i < (*n)->val) {
+        remove_node(&(*n)->left, i);
+    } else {
+        if ((*n)->left != NULL && (*n)->right != NULL) {
+            node** pre = predecessor(n);
+            (*n)->val = (*pre)->val;
+            free(*pre);
+            *pre = NULL;
+        } else if ((*n)->left != NULL) {
+            node* tmp = *n;
+            *n = (*n)->left;
+            free(tmp);
+        } else if ((*n)->right != NULL) {
+            node* tmp = *n;
+            *n = (*n)->right;
+            free(tmp);
+        } else {
+            free(*n);
+            *n = NULL;
+        }
+    }
 }
 
 void binary_tree_remove(binary_tree *t, int i) {
-    return;
+    remove_node(&t->root, i);
 }
 
 bool node_contains(node* n, int i) {
