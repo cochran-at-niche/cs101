@@ -13,29 +13,19 @@ node* new_node(int i) {
     return n;
 }
 
-void insert_node(node* n, node* new) {
-    if (new->val > n->val) {
-        if (n->right == NULL) {
-            n->right = new;
-        } else {
-            insert_node(n->right, new);
-        }
+void insert_node(node** n, node* new) {
+    if (*n == NULL) {
+        *n = new;
+    } else if (new->val > (*n)->val) {
+        insert_node(&(*n)->right, new);
     } else {
-        if (n->left == NULL) {
-            n->left = new;
-        } else {
-            insert_node(n->left, new);
-        }
+        insert_node(&(*n)->left, new);
     }
 }
 
 void binary_tree_add(binary_tree *t, int i) {
     node* new = new_node(i);
-    if (t->root == NULL) {
-        t->root = new;
-    } else {
-        insert_node(t->root, new);
-    }
+    insert_node(&t->root, new);
     t->size++;
 }
 
