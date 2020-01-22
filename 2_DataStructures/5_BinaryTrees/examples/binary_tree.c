@@ -50,7 +50,7 @@ void remove_node(node** n, int i) {
             (*n)->val = (*pre)->val;
             node* tmp = *pre;
             *pre = (*pre)->left;
-            free(tmp)t;
+            free(tmp);
         } else if ((*n)->left != NULL) {
             node* tmp = *n;
             *n = (*n)->left;
