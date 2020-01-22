@@ -17,18 +17,27 @@ int main() {
     }
 
     // TODO: Print it
-    printf("Tree: ");
+    printf("Tree: \n");
     binary_tree_print(t);
     printf("\n");
 
     // Prompt user for a number to search for
     while (true) {
+        // Search
         printf("Enter an integer to search for:\n");
         int target;
         scanf("%d", &target);
 
-        // Search
         bool k = binary_tree_contains(t, target);
         printf("Contains: %s\n", k ? "true" : "false");
+
+        // Remove
+        //printf("Enter an integer to remove:\n");
+        //int target;
+        //scanf("%d", &target);
+
+        //binary_tree_remove(t, target);
+        //binary_tree_print(t);
+        //printf("\n");
     }
 }

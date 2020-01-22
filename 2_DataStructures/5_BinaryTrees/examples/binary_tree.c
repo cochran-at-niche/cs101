@@ -13,38 +13,61 @@ node* new_node(int i) {
     return n;
 }
 
-void insert_node(node* n, node* new) {
-    if (new->val > n->val) {
-        if (n->right == NULL) {
-            n->right = new;
-        } else {
-            insert_node(n->right, new);
-        }
+void insert_node(node** n, node* new) {
+    if (*n == NULL) {
+        *n = new;
+    } else if (new->val > (*n)->val) {
+        insert_node(&(*n)->right, new);
     } else {
-        if (n->left == NULL) {
-            n->left = new;
-        } else {
-            insert_node(n->left, new);
-        }
+        insert_node(&(*n)->left, new);
     }
 }
 
 void binary_tree_add(binary_tree *t, int i) {
     node* new = new_node(i);
-    if (t->root == NULL) {
-        t->root = new;
-    } else {
-        insert_node(t->root, new);
-    }
+    insert_node(&t->root, new);
     t->size++;
 }
 
-void node_remove(node* n, int i) {
-    // TODO
+node** predecessor(node** n) {
+    n = &(*n)->left;
+    while ((*n)->right != NULL) {
+        n = &(*n)->right;
+    }
+    return n;
+}
+
+void remove_node(node** n, int i) {
+    if (*n == NULL) {
+        return;
+    } else if (i > (*n)->val) {
+        remove_node(&(*n)->right, i);
+    } else if (i < (*n)->val) {
+        remove_node(&(*n)->left, i);
+    } else {
+        if ((*n)->left != NULL && (*n)->right != NULL) {
+            node** pre = predecessor(n);
+            (*n)->val = (*pre)->val;
+            node* tmp = *pre;
+            *pre = (*pre)->left;
+            free(tmp);
+        } else if ((*n)->left != NULL) {
+            node* tmp = *n;
+            *n = (*n)->left;
+            free(tmp);
+        } else if ((*n)->right != NULL) {
+            node* tmp = *n;
+            *n = (*n)->right;
+            free(tmp);
+        } else {
+            free(*n);
+            *n = NULL;
+        }
+    }
 }
 
 void binary_tree_remove(binary_tree *t, int i) {
-    return;
+    remove_node(&t->root, i);
 }
 
 bool node_contains(node* n, int i) {
