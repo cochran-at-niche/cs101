@@ -28,6 +28,11 @@ tree](https://en.wikipedia.org/wiki/Binary_search_tree). Your binary search tree
 will have the same "Bag ADT" methods that we've been working with all along:
 `add`, `remove`, and `contains`.
 
+For bonus points, implement a self-balancing tree. I would recommend one of the
+following:
+    * [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree)
+    * [Red Black Tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
+    * [B-Tree](https://en.wikipedia.org/wiki/B-tree)
 
 ### Prerequisites
 
