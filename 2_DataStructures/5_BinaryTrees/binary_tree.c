@@ -1,3 +1,7 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "binary_tree.h"
 
 binary_tree* new_binary_tree() {

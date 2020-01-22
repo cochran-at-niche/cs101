@@ -1,6 +1,4 @@
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
