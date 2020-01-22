@@ -10,6 +10,7 @@ int main() {
     test_binary_tree_add();
     test_binary_tree_add_multiple();
     test_binary_tree_add_many();
+    test_binary_tree_add_many_reverse();
     test_binary_tree_add_duplicates();
     test_binary_tree_remove();
     test_binary_tree_remove_multiple();
@@ -94,6 +95,32 @@ void test_binary_tree_add_many() {
         binary_tree_add(a, i);
     }
     for (int i=0; i<100; i++) {
+        if (!binary_tree_contains(a, i)) {
+            printf("Expected binary tree to contain %d after calling binary_tree_add(%d)\n", i, i);
+            success = false;
+            break;
+        }
+    }
+    if (binary_tree_size(a) != 100) {
+		printf("Expected binary tree to have a size of 100 after calling binary_tree_add 100 times\n");
+        success = false;
+    }
+
+    if (success) {
+        printf("Success\n");
+    }
+    free_binary_tree(a);
+}
+
+void test_binary_tree_add_many_reverse() {
+    printf("\ntest_binary_tree_add_many_reverse\n");
+    bool success = true;
+
+    binary_tree* a = new_binary_tree();
+    for (int i=99; i>=0; i--) {
+        binary_tree_add(a, i);
+    }
+    for (int i=99; i>=0; i--) {
         if (!binary_tree_contains(a, i)) {
             printf("Expected binary tree to contain %d after calling binary_tree_add(%d)\n", i, i);
             success = false;
