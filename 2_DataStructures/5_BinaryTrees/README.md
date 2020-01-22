@@ -30,9 +30,9 @@ will have the same "Bag ADT" methods that we've been working with all along:
 
 For bonus points, implement a self-balancing tree. I would recommend one of the
 following:
-    * [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree)
-    * [Red Black Tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
-    * [B-Tree](https://en.wikipedia.org/wiki/B-tree)
+  * [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree)
+  * [Red Black Tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
+  * [B-Tree](https://en.wikipedia.org/wiki/B-tree)
 
 ### Prerequisites
 
