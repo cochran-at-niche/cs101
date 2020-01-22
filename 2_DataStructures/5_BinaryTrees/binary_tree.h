@@ -1,6 +1,4 @@
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
@@ -17,14 +15,14 @@ typedef struct {
     int size;
 } binary_tree;
 
-// new_binary_tree allocates memory for a new dynamic array and initializes
+// new_binary_tree allocates memory for a new binary tree and initializes
 // its fields.
 binary_tree* new_binary_tree() ;
 
 // binary_tree_add inserts an item into the binary tree.
 void binary_tree_add(binary_tree *t, int i);
 
-// binary_tree_remove takes an item out of the binary tree.
+// binary_tree_remove deletes an item from the binary tree.
 void binary_tree_remove(binary_tree *t, int i);
 
 // binary_tree_contains returns true if the given item exists in the binary
