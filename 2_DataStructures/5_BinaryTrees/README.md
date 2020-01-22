@@ -47,7 +47,7 @@ following:
 2. Run `make test` (if you have gcc installed and would rather build/run the
    tests locally, run `make test.out && ./test.out` instead). *You should see a
    bunch of failing tests*.
-3. Open the `binarY_tree.c` file. Implement the necessary code for each of the
+3. Open the `binary_tree.c` file. Implement the necessary code for each of the
    `TODO` comments.
 4. Repeat steps 2-3 until all tests are passing.
 
