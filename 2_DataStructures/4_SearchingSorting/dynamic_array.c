@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "dynamic_array.h"
 
@@ -73,9 +74,60 @@ void dyn_arr_insertion_sort(dyn_arr *a) {
     }
 }
 
+// Implements the merge sort algorithm
+// For shorthand, N := array size
 void dyn_arr_sort(dyn_arr *a) {
-    // TODO: Implement a O(n log n) sorting algorithm (e.g. merge sort, quick
-    // sort, or heap sort). The operation should modify the array in-place.
+    // The total number of sweeps we must perform is
+    // the smallest integer that is greater than or equal to
+    // log2(N)
+    // To compute log2 we use the change of base formula:
+    // logy(x) = log(x) / log(y)
+    int nsweeps;
+    nsweeps = (int) ceil(
+        log((double) a->size) / log(2.0)
+    );
+
+    // For each sublist we analyze at sweep i, we can build two "runs" which
+    // are both already sorted lists from the previous step. For example, after
+    // sweep i-1, we might have two sorted sublists A and B; we will call these
+    // run A and run B. At sweep i, sublist C is composed of run A and run B
+    // appended together. Both A and B have capacity 2^(i-1) and will usually
+    // have size = capacity EXCEPT for a sublist whose right endpoint coincides
+    // with the end of the array
+    int maxrunsize = pow(2, nsweeps - 1);
+    int run1[maxrunsize];
+    int run2[maxrunsize];
+    int size1 = 0, size2 = 0;
+
+    // Iteratively sweep over our array. We start at i = 1 here because at
+    // sweep 0 we are dealing with N sublists each of length 1 so they are, by
+    // definition, sorted
+    int sublength = 0;
+    int nsublists = 0;
+    for (int i = 1; i < nsweeps; i++) {
+        // At sweep i, we sort sublists of length 2^i
+        // With sublists of length 2^i, there are
+        // ceil(N / 2^i) sublists to sort at sweep i
+        sublength = pow(2, i);
+        nsublists = (int) ceil(
+            ((double) a->size) / ((double) sublength)
+        );
+
+        // Iterate over all sublists 
+        for (int j = 0; j < nsublists; j++) {
+            // Populate the runs
+
+            // If not the last sublist, then both runs will be of the same
+            // size: 2^(i-1) = 2^i / 2
+            if j != nsublists - 1 {
+                size1 = sublength / 2;
+                size2 = sublength / 2;
+            } else {
+                size1 = sublength / 2;
+                size2 = a->size - (j * pow(2, i) + pow(2, i - 1));
+            }
+        }
+    }
 }
 
 int dyn_arr_size(dyn_arr *a) {
