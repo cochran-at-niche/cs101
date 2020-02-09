@@ -26,10 +26,15 @@ void dyn_arr_add(dyn_arr *a, int i);
 // nothing.
 void dyn_arr_remove(dyn_arr *a, int i);
 
-
-// dyn_arr_contains returns true if the given item exists in the dynamic array,
-// and false otherwise.
+// dyn_arr_contains performs a linear search on the array. Returns true
+// if the given item exists in the dynamic array, and false otherwise.
 bool dyn_arr_contains(dyn_arr *a, int i);
+
+// dyn_arr_insertion_sort uses insertion sort to sort the underlying array.
+void dyn_arr_insertion_sort(dyn_arr *a);
+
+// dyn_arr_sort uses a O(n log n) algorithm to sort the underlying array.
+void dyn_arr_sort(dyn_arr *a);
 
 // dyn_arr_size returns the number of items currently in the dynamic array.
 int dyn_arr_size(dyn_arr *a);

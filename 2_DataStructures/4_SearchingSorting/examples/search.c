@@ -19,8 +19,9 @@ int main() {
     dyn_arr_selection_sort(a);
 
     // Print it
-    printf("Array:");
+    printf("Array: ");
     dyn_arr_print(a);
+    printf("\n");
 
     // Prompt user for a number to search for
     printf("Enter an integer to search for:\n");

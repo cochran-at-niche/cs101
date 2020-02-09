@@ -1,3 +1,8 @@
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "linked_list.h"
 #include "test.h"
 
 int main() {
@@ -135,7 +140,7 @@ void test_linked_list_push_front_many() {
         }
     }
     if (linked_list_size(l) != 100) {
-		printf("Expected linked list to have a linked_list_size of 100 after calling linked_list_push_front() 100 times\n");
+		printf("Expected linked list to have a size of 100 after calling linked_list_push_front() 100 times\n");
         success = false;
     }
 
@@ -391,7 +396,7 @@ void test_linked_list_push_back_many() {
         }
     }
     if (linked_list_size(l) != 100) {
-		printf("Expected linked list to have a linked_list_size of 100 after calling linked_list_push_back() 100 times\n");
+		printf("Expected linked list to have a size of 100 after calling linked_list_push_back() 100 times\n");
         success = false;
     }
 
@@ -801,7 +806,7 @@ void test_linked_list_push_front_remove() {
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_front(1) and linked_list_remove(1)\n");
+		printf("Expected linked list to have a size of 0 after calling linked_list_push_front(1) and linked_list_remove(1)\n");
         success = false;
     }
 
@@ -824,7 +829,7 @@ void test_linked_list_push_front_remove_multiple() {
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), and linked_list_remove(1)\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), and linked_list_remove(1)\n");
         success = false;
     }
     linked_list_remove(l, 2);
@@ -833,7 +838,7 @@ void test_linked_list_push_front_remove_multiple() {
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), linked_list_remove(1), and linked_list_remove(2)\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_push_front(1), linked_list_push_front(2), linked_list_remove(1), and linked_list_remove(2)\n");
         success = false;
     }
 
@@ -862,7 +867,7 @@ void test_linked_list_push_front_remove_many() {
         }
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_front and linked_list_remove 100 times\n");
+		printf("Expected linked list to have a size of 0 after calling linked_list_push_front and linked_list_remove 100 times\n");
         success = false;
     }
 
@@ -889,7 +894,7 @@ void test_linked_list_push_front_remove_non_existent() {
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_remove(1), linked_list_push_front(1), and linked_list_remove(2) on an empty linked list\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_remove(1), linked_list_push_front(1), and linked_list_remove(2) on an empty linked list\n");
         success = false;
     }
 
@@ -912,7 +917,7 @@ void test_linked_list_push_front_remove_duplicates() {
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) once\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_push_front(1) twice and linked_list_remove(1) once\n");
         success = false;
     }
     linked_list_remove(l, 1);
@@ -921,7 +926,7 @@ void test_linked_list_push_front_remove_duplicates() {
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_front(1) twice and linked_list_remove(1) twice\n");
+		printf("Expected linked list to have a size of 0 after calling linked_list_push_front(1) twice and linked_list_remove(1) twice\n");
         success = false;
     }
 
@@ -996,7 +1001,7 @@ void test_linked_list_push_back_remove() {
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_back(1) and linked_list_remove(1)\n");
+		printf("Expected linked list to have a size of 0 after calling linked_list_push_back(1) and linked_list_remove(1)\n");
         success = false;
     }
 
@@ -1019,7 +1024,7 @@ void test_linked_list_push_back_remove_multiple() {
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), and linked_list_remove(1)\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), and linked_list_remove(1)\n");
         success = false;
     }
     linked_list_remove(l, 2);
@@ -1028,7 +1033,7 @@ void test_linked_list_push_back_remove_multiple() {
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), linked_list_remove(1), and linked_list_remove(2)\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_push_back(1), linked_list_push_back(2), linked_list_remove(1), and linked_list_remove(2)\n");
         success = false;
     }
 
@@ -1057,7 +1062,7 @@ void test_linked_list_push_back_remove_many() {
         }
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_back and linked_list_remove 100 times\n");
+		printf("Expected linked list to have a size of 0 after calling linked_list_push_back and linked_list_remove 100 times\n");
         success = false;
     }
 
@@ -1084,7 +1089,7 @@ void test_linked_list_push_back_remove_non_existent() {
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_remove(1), linked_list_push_back(1), and linked_list_remove(2) on an empty linked list\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_remove(1), linked_list_push_back(1), and linked_list_remove(2) on an empty linked list\n");
         success = false;
     }
 
@@ -1107,7 +1112,7 @@ void test_linked_list_push_back_remove_duplicates() {
         success = false;
     }
     if (linked_list_size(l) != 1) {
-		printf("Expected linked list to have a linked_list_size of 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) once\n");
+		printf("Expected linked list to have a size of 1 after calling linked_list_push_back(1) twice and linked_list_remove(1) once\n");
         success = false;
     }
     linked_list_remove(l, 1);
@@ -1116,7 +1121,7 @@ void test_linked_list_push_back_remove_duplicates() {
         success = false;
     }
     if (linked_list_size(l) != 0) {
-		printf("Expected linked list to have a linked_list_size of 0 after calling linked_list_push_back(1) twice and linked_list_remove(1) twice\n");
+		printf("Expected linked list to have a size of 0 after calling linked_list_push_back(1) twice and linked_list_remove(1) twice\n");
         success = false;
     }
 

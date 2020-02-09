@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "dynamic_array.h"
 
 const int INITIAL_CAPACITY = 2;
@@ -47,7 +50,7 @@ void dyn_arr_remove(dyn_arr *a, int i) {
     }
 }
 
-bool dyn_arr_sequential_search(dyn_arr *a, int i) {
+bool dyn_arr_contains(dyn_arr *a, int i) {
     for (int j=0; j < a->size; j++) {
         if (a->array[j] == i) {
             return true;
@@ -56,61 +59,27 @@ bool dyn_arr_sequential_search(dyn_arr *a, int i) {
     return false;
 }
 
-bool dyn_arr_binary_search(dyn_arr* a, int i) {
-    int low=0;
-    int high=a->size;
-
-    while (low < high) {
-        int mid = (low + high) / 2;
-        if (a->array[mid] < i) {
-            low = mid + 1;
-        } else if (a->array[mid] > i) {
-            high = mid;
-        } else {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-void swap(dyn_arr* a, int i, int j) {
-    int tmp = a->array[i];
-    a->array[i] = a->array[j];
-    a->array[j] = tmp;
-}
-
-void dyn_arr_selection_sort(dyn_arr* a) {
+void dyn_arr_insertion_sort(dyn_arr *a) {
     for (int i = 0; i < a->size; i++) {
-        int min = i;
-        for (int j = i+1; j < a->size; j++) {
-            if (a->array[j] < a->array[min]) {
-                min = j;
-            }
-        }
-        swap(a, i, min);
-    }
-}
-
-void dyn_arr_insertion_sort(dyn_arr* a) {
-    for (int i = 0; i < a->size; i++) {
-        for (int j = i; j > 0; j--) {
-            if (a->array[j] >= a->array[j-1]) {
+        int tmp = a->array[i];
+        int j;
+        for (j = i; j > 0; j--) {
+            if (tmp >= a->array[j-1]) {
                 break;
             }
-            swap(a, j, j-1);
+            a->array[j] = a->array[j-1];
         }
+        a->array[j] = tmp;
     }
+}
+
+void dyn_arr_sort(dyn_arr *a) {
+    // TODO: Implement a O(n log n) sorting algorithm (e.g. merge sort, quick
+    // sort, or heap sort). The operation should modify the array in-place.
 }
 
 int dyn_arr_size(dyn_arr *a) {
     return a->size;
-}
-
-void dyn_arr_print(dyn_arr *a) {
-    for (int i = 0; i < a->size; i++) {
-        printf("%d ", a->array[i]);
-    }
 }
 
 void free_dyn_arr(dyn_arr *a) {
