@@ -18,10 +18,10 @@ docker-test:
 	gcc -Wall -o /test dynamic_array.h dynamic_array.c test.h test.c && /test
 
 docker-compare:
-	gcc -Wall -o /test dynamic_array.h dynamic_array.c compare.c && /test
+	gcc -Wall -o /test dynamic_array.h dynamic_array.c compare.c -lm && /test
 
 test.out: dynamic_array.h dynamic_array.c test.h test.c
-	gcc -Wall -o $@ dynamic_array.h dynamic_array.c test.h test.c
+	gcc -Wall -o $@ dynamic_array.h dynamic_array.c test.h test.c -lm
 
 clean:
 	rm test.out
