@@ -50,56 +50,45 @@ type Result struct {
 	Fact
 }
 
-func (fs FactSchema) Less(than btree.Item) bool {
-	return fs.Label < than.(FactSchema).Label
-}
-
-func (f Fact) Less(than btree.Item) bool {
-	if f.EntityGUID == than.(Fact).EntityGUID {
-		return f.FactGUID < than.(Fact).FactGUID
-	}
-	return f.EntityGUID < than.(Fact).EntityGUID
-}
-
 var factSchemaTable = []FactSchema{
 	{
-		ID:    1,
-		GUID:  "4dc4d724-53ed-4c0b-be80-e357645f8db1",
+		ID:    3480,
+		GUID:  "d08caa77-ce62-46f3-b4f4-159203fbef24",
 		Name:  "Tuition",
 		Label: "Yearly Tuition",
 	},
 	{
-		ID:    2,
-		GUID:  "7b456ed3-ee0d-4af7-b7a1-82b91ee4fff7",
-		Name:  "NetPrice",
-		Label: "Net Price",
+		ID:    4,
+		GUID:  "76b06678-04cd-4949-9938-1b6a33b8e073",
+		Name:  "TotalStudents",
+		Label: "Students",
 	},
 }
 
 var factTable = []Fact{
 	{
-		ID:         1,
-		EntityGUID: "00219d2b-b49c-4fd4-a361-02ccb1ccd4c4",
-		FactGUID:   "4dc4d724-53ed-4c0b-be80-e357645f8db1",
-		Value:      1000,
+		ID:         114171110,
+		EntityGUID: "00016c60-f35e-40a3-811c-4c87e6a68b56",
+		FactGUID:   "d08caa77-ce62-46f3-b4f4-159203fbef24",
+		Value:      9576,
 	},
 	{
-		ID:         2,
-		EntityGUID: "00219d2b-b49c-4fd4-a361-02ccb1ccd4c4",
-		FactGUID:   "7b456ed3-ee0d-4af7-b7a1-82b91ee4fff7",
-		Value:      2000,
+		ID:         114171098,
+		EntityGUID: "00016c60-f35e-40a3-811c-4c87e6a68b56",
+		FactGUID:   "76b06678-04cd-4949-9938-1b6a33b8e073",
+		Value:      250,
 	},
 	{
-		ID:         3,
-		EntityGUID: "f18ba1e6-a73c-488f-aba7-ada796a909eb",
-		FactGUID:   "4dc4d724-53ed-4c0b-be80-e357645f8db1",
-		Value:      3000,
+		ID:         114171621,
+		EntityGUID: "0002e302-4722-41c2-99f7-d8f504655389",
+		FactGUID:   "d08caa77-ce62-46f3-b4f4-159203fbef24",
+		Value:      11000,
 	},
 	{
-		ID:         4,
-		EntityGUID: "f18ba1e6-a73c-488f-aba7-ada796a909eb",
-		FactGUID:   "7b456ed3-ee0d-4af7-b7a1-82b91ee4fff7",
-		Value:      4000,
+		ID:         114171611,
+		EntityGUID: "0002e302-4722-41c2-99f7-d8f504655389",
+		FactGUID:   "76b06678-04cd-4949-9938-1b6a33b8e073",
+		Value:      138,
 	},
 }
 
@@ -117,6 +106,10 @@ func sequentialScanWithFilter() {
 	}
 }
 
+func (fs FactSchema) Less(than btree.Item) bool {
+	return fs.Label < than.(FactSchema).Label
+}
+
 func indexScan() {
 	index := btree.New(btreeDegree)
 	for _, factSchema := range factSchemaTable {
@@ -131,7 +124,7 @@ func nestedLoopJoin() {
 	for _, factSchema := range factSchemaTable {
 		if factSchema.Label == "Yearly Tuition" {
 			for _, fact := range factTable {
-				if fact.EntityGUID == "00219d2b-b49c-4fd4-a361-02ccb1ccd4c4" {
+				if fact.EntityGUID == "00016c60-f35e-40a3-811c-4c87e6a68b56" {
 					if factSchema.GUID == fact.FactGUID {
 						fmt.Println(Result{
 							FactSchema: factSchema,
@@ -157,6 +150,13 @@ func nestedLoopJoinFull() {
 	}
 }
 
+func (f Fact) Less(than btree.Item) bool {
+	if f.EntityGUID == than.(Fact).EntityGUID {
+		return f.FactGUID < than.(Fact).FactGUID
+	}
+	return f.EntityGUID < than.(Fact).EntityGUID
+}
+
 func indexScanJoin() {
 	index := btree.New(btreeDegree)
 	for _, fact := range factTable {
@@ -166,7 +166,7 @@ func indexScanJoin() {
 	for _, factSchema := range factSchemaTable {
 		if factSchema.Label == "Yearly Tuition" {
 			fact := index.Get(Fact{
-				EntityGUID: "00219d2b-b49c-4fd4-a361-02ccb1ccd4c4",
+				EntityGUID: "00016c60-f35e-40a3-811c-4c87e6a68b56",
 				FactGUID:   factSchema.GUID,
 			})
 			fmt.Println(Result{

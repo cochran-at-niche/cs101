@@ -18,7 +18,7 @@ WHERE name = 'Tuition';
 -- Bitmap Index Scan
 SELECT *
 FROM fact_schema
-WHERE name IN ('Tuition', 'NetPrice');
+WHERE name IN ('Tuition', 'Students');
 
 -- Nested Loop Join
 ALTER TABLE fact DROP CONSTRAINT fact_entity_uuid_fact_uuid_key;
@@ -26,7 +26,7 @@ ALTER TABLE fact DROP CONSTRAINT fact_entity_uuid_fact_uuid_key;
 SELECT *
 FROM fact_schema AS fs
 INNER JOIN fact AS f ON fs.uuid = f.fact_uuid
-WHERE f.entity_uuid = '00219d2b-b49c-4fd4-a361-02ccb1ccd4c4'
+WHERE f.entity_uuid = '00016c60-f35e-40a3-811c-4c87e6a68b56'
 AND fs.label = 'Yearly Tuition';
 
 -- Index Scan Join
@@ -35,7 +35,7 @@ ALTER TABLE fact ADD CONSTRAINT fact_entity_uuid_fact_uuid_key UNIQUE(entity_uui
 SELECT *
 FROM fact_schema AS fs
 INNER JOIN fact AS f ON fs.uuid = f.fact_uuid
-WHERE f.entity_uuid = '00219d2b-b49c-4fd4-a361-02ccb1ccd4c4'
+WHERE f.entity_uuid = '00016c60-f35e-40a3-811c-4c87e6a68b56'
 AND fs.label = 'Yearly Tuition';
 
 -- Hash Join
