@@ -21,6 +21,9 @@ func main() {
 	fmt.Println("\nNested Loop Join")
 	nestedLoopJoin()
 
+	fmt.Println("\nNested Loop Join (Full)")
+	nestedLoopJoinFull()
+
 	fmt.Println("\nIndex Scan Join")
 	indexScanJoin()
 
@@ -126,8 +129,24 @@ func indexScan() {
 
 func nestedLoopJoin() {
 	for _, factSchema := range factSchemaTable {
+		if factSchema.Label == "Yearly Tuition" {
+			for _, fact := range factTable {
+				if fact.EntityGUID == "00219d2b-b49c-4fd4-a361-02ccb1ccd4c4" {
+					if factSchema.GUID == fact.FactGUID {
+						fmt.Println(Result{
+							FactSchema: factSchema,
+							Fact:       fact,
+						})
+					}
+				}
+			}
+		}
+	}
+}
+
+func nestedLoopJoinFull() {
+	for _, factSchema := range factSchemaTable {
 		for _, fact := range factTable {
-			// TODO: Match SQL example
 			if factSchema.GUID == fact.FactGUID {
 				fmt.Println(Result{
 					FactSchema: factSchema,
