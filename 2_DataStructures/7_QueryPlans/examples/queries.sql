@@ -18,7 +18,7 @@ WHERE name = 'Tuition';
 -- Bitmap Index Scan
 SELECT *
 FROM fact_schema
-WHERE name IN ('Tuition', 'Students');
+WHERE name IN ('Tuition', 'TotalStudents');
 
 -- Nested Loop Join
 ALTER TABLE fact DROP CONSTRAINT fact_entity_uuid_fact_uuid_key;
@@ -56,10 +56,21 @@ SELECT *
 FROM fact_schema
 ORDER BY label;
 
--- Index Sort
+-- In-Memory Top-N Heapsort
+SELECT *
+FROM fact_schema
+ORDER BY label
+LIMIT 10;
+
+-- Index Scan Sort
 SELECT *
 FROM fact
 ORDER BY entity_uuid
+
+-- Hash Aggregate
+SELECT entity_uuid, COUNT(*)
+FROM fact
+GROUP BY entity_uuid;
 
 -- Re-enable Parallel Queries
 SET max_parallel_workers_per_gather = 2;

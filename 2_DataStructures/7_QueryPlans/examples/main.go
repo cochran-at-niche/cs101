@@ -29,6 +29,9 @@ func main() {
 
 	fmt.Println("\nHash Join")
 	hashJoin()
+
+	fmt.Println("\nHash Group By")
+	hashGroupBy()
 }
 
 type FactSchema struct {
@@ -189,5 +192,16 @@ func hashJoin() {
 			FactSchema: factSchema,
 			Fact:       fact,
 		})
+	}
+}
+
+func hashGroupBy() {
+	hashTable := map[string]int{}
+	for _, fact := range factTable {
+		hashTable[fact.EntityGUID] += 1
+	}
+
+	for entityGUID, count := range hashTable {
+		fmt.Println(entityGUID, count)
 	}
 }
