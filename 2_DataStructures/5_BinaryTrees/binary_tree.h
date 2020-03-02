@@ -7,6 +7,7 @@ typedef struct node {
     struct node* left;
     struct node* right;
     int val;
+    int count;
 } node;
 
 // binary_tree represents a binary search tree.
@@ -31,6 +32,9 @@ void node_add(node **root, int i);
 // binary_tree_remove deletes an item from the binary tree.
 void binary_tree_remove(binary_tree *t, int i);
 
+// node_remove deletes the given node from the tree
+void node_remove(node **d);
+
 // binary_tree_contains returns true if the given item exists in the binary
 // tree, and false otherwise.
 bool binary_tree_contains(binary_tree *t, int i);
@@ -38,6 +42,14 @@ bool binary_tree_contains(binary_tree *t, int i);
 // find_node returns a pointer to the node in the tree that has the value i
 // if no such node exists, find_node returns NULL. find_node recursively traverses the tree
 node* find_node(node *root, int i);
+
+// find_max_parent returns a (pointer-to-a-pointer-to the) parent node of the node
+// that has the largest value in a subtree
+node** find_max_parent(node **root);
+
+// find_min_parent returns a (pointer-to-a-pointer-to the) parent node of the node
+// that has the smallest value in a subtree
+node** find_min_parent(node **root);
 
 // binary_tree_size returns the number of items currently in the binary tree.
 int binary_tree_size(binary_tree *t);

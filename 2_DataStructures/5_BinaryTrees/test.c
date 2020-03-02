@@ -12,11 +12,11 @@ int main() {
     test_binary_tree_add_many();
     test_binary_tree_add_many_reverse();
     test_binary_tree_add_duplicates();
-//    test_binary_tree_remove();
-//    test_binary_tree_remove_multiple();
-//    test_binary_tree_remove_many();
-//    test_binary_tree_remove_non_existent();
-//    test_binary_tree_remove_duplicates();
+    test_binary_tree_remove();
+    test_binary_tree_remove_multiple();
+    test_binary_tree_remove_many();
+    test_binary_tree_remove_non_existent();
+    test_binary_tree_remove_duplicates();
 }
 
 void test_new_binary_tree() {
