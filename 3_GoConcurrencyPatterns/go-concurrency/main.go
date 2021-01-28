@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
+	"context"
 	"fmt"
+	"os"
 	"runtime"
 	"sync"
 	"time"
@@ -21,6 +24,9 @@ func main() {
 	//selectDefault()
 	//selectSend()
 	//cancellation()
+	//contextCancellation()
+	//timeout()
+	//contextTimeout()
 }
 
 // Goroutines are lightweight threads. This means that they run *concurrently*.
@@ -373,8 +379,148 @@ func selectSend() {
 }
 
 // Cancellation is a more realistic example of how select statements can be
-// useful
+// useful. This example is similar to our ping pong example, except that now we
+// are able to cancel the goroutines.
 func cancellation() {
+	channel := make(chan int)
+	done := make(chan struct{})
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		for {
+			select {
+			case <-channel:
+			case <-done:
+				fmt.Println("Goroutine #1 stopping")
+				return
+			}
+
+			fmt.Println("Ping")
+			time.Sleep(100 * time.Millisecond)
+
+			select {
+			case channel <- 1:
+			case <-done:
+				fmt.Println("Goroutine #1 stopping")
+				return
+			}
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		for {
+			select {
+			case <-channel:
+			case <-done:
+				fmt.Println("Goroutine #2 stopping")
+				return
+			}
+
+			fmt.Println("Pong")
+			time.Sleep(100 * time.Millisecond)
+
+			select {
+			case channel <- 1:
+			case <-done:
+				fmt.Println("Goroutine #2 stopping")
+				return
+			}
+		}
+	}()
+
+	// Initial serve
+	fmt.Println("Serve")
+	channel <- 1
+
+	// Wait for user input, then cancel the goroutines
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	fmt.Println("Closing done channel")
+	close(done)
+
+	fmt.Println("Waiting for goroutines to finish")
+	wg.Wait()
+
+	fmt.Println("Done")
+}
+
+func contextCancellation() {
+	channel := make(chan int)
+	ctx, cancel := context.WithCancel(context.Background())
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		for {
+			select {
+			case <-channel:
+			case <-ctx.Done():
+				fmt.Println("Goroutine #1 stopping")
+				return
+			}
+
+			fmt.Println("Ping")
+			time.Sleep(100 * time.Millisecond)
+
+			select {
+			case channel <- 1:
+			case <-ctx.Done():
+				fmt.Println("Goroutine #1 stopping")
+				return
+			}
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		for {
+			select {
+			case <-channel:
+			case <-ctx.Done():
+				fmt.Println("Goroutine #2 stopping")
+				return
+			}
+
+			fmt.Println("Pong")
+			time.Sleep(100 * time.Millisecond)
+
+			select {
+			case channel <- 1:
+			case <-ctx.Done():
+				fmt.Println("Goroutine #2 stopping")
+				return
+			}
+		}
+	}()
+
+	// Initial serve
+	fmt.Println("Serve")
+	channel <- 1
+
+	// Wait for user input, then cancel the goroutines
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	fmt.Println("Cancelling context")
+	cancel()
+
+	fmt.Println("Waiting for goroutines to finish")
+	wg.Wait()
+
+	fmt.Println("Done")
+}
+
+// Setting a timeout is a more realistic example of how select statements can be useful
+func timeout() {
 	start := time.Now()
 
 	// This is just the generator from the generator example
@@ -405,6 +551,45 @@ func cancellation() {
 			fmt.Printf("Result read from channel: %s\n", result)
 		case <-timeoutChan:
 			fmt.Printf("Timeout!\n")
+			fmt.Printf("Elapsed: %s\n", time.Since(start))
+			return
+		}
+	}
+}
+
+// The context package is a more idiomatic way to set timeouts, but it's very
+// similar under the hood
+func contextTimeout() {
+	start := time.Now()
+
+	// This is just the generator from the generator example
+	generator := func() <-chan string {
+		c := make(chan string)
+		fmt.Println("Starting generator")
+		go func() {
+			for i := 0; i < 10; i++ {
+				time.Sleep(100 * time.Millisecond)
+				fmt.Printf("Sending result #%d on channel\n", i)
+				c <- fmt.Sprintf("result #%d", i)
+			}
+			close(c)
+		}()
+		return c
+	}()
+
+	// We want to time out after 500 milliseconds
+	context, _ := context.WithTimeout(context.Background(), 500*time.Millisecond)
+
+	// Read from the generator, but quit if the timeout is reached
+	// Question: what would happen if the timeout was longer than it took to
+	// generate all of the results?
+	fmt.Printf("Beginning to read from channel\n")
+	for {
+		select {
+		case result := <-generator:
+			fmt.Printf("Result read from channel: %s\n", result)
+		case <-context.Done():
+			fmt.Printf("Context timeout!\n")
 			fmt.Printf("Elapsed: %s\n", time.Since(start))
 			return
 		}
